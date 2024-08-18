@@ -34,7 +34,7 @@ struct NotchContentView: View {
                     if vm.notchState == .closed && vm.expandingView.show {
                         Text(vm.expandingView.type == .battery ? "Charging" : "Downloading").foregroundStyle(.white).padding(.leading, 4)
                     }
-                    if !vm.expandingView.show && vm.currentView != .menu  {
+                    if !vm.expandingView.show {
                         
                         Image(nsImage: musicManager.albumArt)
                             .resizable()
@@ -49,12 +49,7 @@ struct NotchContentView: View {
                     }
                     
                     if vm.notchState == .open {
-                        if vm.currentView == .menu {
-                            BoringExtrasMenu(vm: vm).transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3))))
-                        }
                         
-                        if vm.currentView != .menu {
-                            if true {
                                 VStack(alignment: .leading, spacing: 5) {
                                     VStack(alignment: .leading, spacing: 3){
                                         Text(musicManager.songTitle)
@@ -120,21 +115,18 @@ struct NotchContentView: View {
                                 .allowsHitTesting(!vm.notchMetastability)
                                 .transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(vm.notchState == .closed ? 0 : 0.1)))
                                 .buttonStyle(PlainButtonStyle())
-                            }
-                        }
+                        
                     }
                     
                     
-                    if vm.currentView != .menu {
-                        Spacer()
-                    }
+                    Spacer()
                     
                     if musicManager.isPlayerIdle == true && vm.notchState == .closed && !vm.expandingView.show && vm.nothumanface {
                         MinimalFaceFeatures().transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3))))
                     }
                     
                     
-                    if vm.currentView != .menu && vm.notchState == .closed && vm.expandingView.show  {
+                    if vm.notchState == .closed && vm.expandingView.show  {
                         if vm.expandingView.type == .battery {
                             BoringBatteryView(batteryPercentage: batteryModel.batteryPercentage, isPluggedIn: batteryModel.isPluggedIn, batteryWidth: 30)
                         } else {

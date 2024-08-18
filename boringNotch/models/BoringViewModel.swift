@@ -37,7 +37,7 @@ class BoringViewModel: NSObject, ObservableObject {
     let animation: Animation?
     @Published var contentType: ContentType = .normal
     @Published var notchState: NotchState = .closed
-    @Published var currentView: NotchViews = .empty
+    @Published var currentView: NotchViews = .home
     @Published var headerTitle: String = "Boring Notch"
     @Published var emptyStateText: String = "Play some jams, ladies, and watch me shine! New features coming soon! 🎶 🚀"
     @Published var sizes : Sizes = Sizes()
@@ -154,13 +154,6 @@ class BoringViewModel: NSObject, ObservableObject {
         self.notchState = .closed
     }
     
-    func openMenu() {
-        self.currentView = .menu
-    }
-    
-    func openMusic(){
-        self.currentView = .music
-    }
     
     func openClipboard() {
         self.showCHPanel = true;
@@ -171,7 +164,7 @@ class BoringViewModel: NSObject, ObservableObject {
     }
     
     func showEmpty() {
-        self.currentView = .empty
+        self.currentView = .home
     }
     
     func closeHello() {
