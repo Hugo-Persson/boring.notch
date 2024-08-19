@@ -1,4 +1,4 @@
-    //
+//
     //  BoringNotch.swift
     //  boringNotch
     //
@@ -20,6 +20,7 @@ struct BoringNotch: View {
     private var clipboardManager: ClipboardManager?
     @StateObject var microphoneHandler: MicrophoneHandler
     @State private var haptics: Bool = false
+    @State var dropTargeting: Bool = false
     
     @State private var hoverStartTime: Date?
     @State private var hoverTimer: Timer?
@@ -59,6 +60,7 @@ struct BoringNotch: View {
             .animation(notchAnimation, value: musicManager.isPlayerIdle)
             .animation(.smooth, value: vm.firstLaunch)
             .animation(notchAnimation, value: vm.sneakPeak.show)
+            .background(dragDetector)
             .overlay {
                 NotchContentView(clipboardManager: clipboardManager, microphoneHandler: microphoneHandler)
                     //.environmentObject(DownloadWatcher(folderPath: nil, vm: vm))
@@ -106,15 +108,20 @@ struct BoringNotch: View {
         }
     }
     
+    func doOpen(){
+        
+        withAnimation() {
+            vm.open()
+            vm.notchMetastability = false
+        }
+        cancelHoverTimer()
+    }
+    
     private func checkHoverDuration() {
         guard let startTime = hoverStartTime else { return }
         let hoverDuration = Date().timeIntervalSince(startTime)
         if hoverDuration >= vm.minimumHoverDuration {
-            withAnimation() {
-                vm.open()
-                vm.notchMetastability = false
-            }
-            cancelHoverTimer()
+            doOpen()
         }
     }
     
@@ -125,6 +132,42 @@ struct BoringNotch: View {
         withAnimation(vm.animation) {
             hoverAnimation = false
         }
+    }
+    
+    @ViewBuilder
+    var dragDetector: some View {
+        Rectangle()
+            .foregroundStyle(Color.black.opacity(0.001)) // fuck you apple and 0.001 is the smallest we can have
+            .contentShape(Rectangle())
+            .frame(width: calculateNotchWidth())
+            .onDrop(of: [.data], isTargeted: $dropTargeting) { _ in true }
+            .onChange(of: dropTargeting) { _, isTargeted in
+                if isTargeted, vm.notchState == .closed {
+                    // Open the notch when a file is dragged over it
+                    vm.currentView = .shelf
+                    doOpen()
+                } else if !isTargeted {
+                    // Close the notch when the dragged item leaves the area
+                    let mouseLocation: NSPoint = NSEvent.mouseLocation
+                    let openedHeight = vm.sizes.size.opened.height!
+                    let openedWidth = calculateNotchWidth()
+                    guard let screen = NSScreen.main else { return }
+                    let screenRect = screen.visibleFrame
+                    let rect = CGRect(
+                        x: screenRect.origin.x + (screenRect.width - openedWidth) / 2,
+                        y: screenRect.origin.y + screenRect.height - openedHeight,
+                        width: openedWidth,
+                        height: openedHeight
+                    )
+                    if !rect.contains(mouseLocation) {
+                        print("Closing notch")
+                        withAnimation(.smooth) {
+                            vm.close()
+                        }
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 

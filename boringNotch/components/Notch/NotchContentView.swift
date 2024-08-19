@@ -55,7 +55,7 @@ struct NotchContentView: View {
                         case .shelf:
                                 NotchShelfView()
                         default:
-                                EmptyView()
+                            Text("ERROR: VIEW NOT DEFINED")
                         }
                     }
                     
@@ -157,6 +157,8 @@ struct NotchContentView: View {
             // Return the appropriate width based on the notch state
         return vm.notchState == .open ? vm.musicPlayerSizes.player.size.opened.width : dynamicWidth + (vm.sneakPeak.show ? -12 : 0)
     }
+    
+
 }
 
 #Preview {

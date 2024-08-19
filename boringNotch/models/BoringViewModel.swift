@@ -8,6 +8,17 @@
 import SwiftUI
 import Combine
 
+private let availableDirectories = FileManager
+    .default
+    .urls(for: .documentDirectory, in: .userDomainMask)
+let documentsDirectory = availableDirectories[-1]
+    .appendingPathComponent("BoringNotch")
+let bundleIdentifier = Bundle.main.bundleIdentifier!
+let appVersion = "\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "") (\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""))"
+
+let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
+    .appendingPathComponent(bundleIdentifier)
+
 enum SneakContentType {
     case brightness
     case volume
@@ -68,6 +79,8 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var systemEventIndicatorUseAccent: Bool = false
     @Published var clipboardHistoryHideScrollbar: Bool = true
     @Published var clipboardHistoryPreserveScrollPosition: Bool = false
+    @Published var optionKeyPressed: Bool = false
+    @Published var spacing: CGFloat = 16
     @Published var sneakPeak: SneakPeak = SneakPeak() {
         didSet {
             if sneakPeak.show {
@@ -119,6 +132,7 @@ class BoringViewModel: NSObject, ObservableObject {
     func open(){
         self.notchState = .open
     }
+
     
     func toggleSneakPeak(status:Bool, type: SneakContentType, value: CGFloat = 0 ) {
         if self.sneakPeak.show {
@@ -152,6 +166,7 @@ class BoringViewModel: NSObject, ObservableObject {
     
     func close(){
         self.notchState = .closed
+        self.currentView = .home
     }
     
     

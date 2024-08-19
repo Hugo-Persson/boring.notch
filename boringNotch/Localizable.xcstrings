@@ -299,6 +299,12 @@
     "Enable sneak peek" : {
 
     },
+    "Error" : {
+
+    },
+    "ERROR: VIEW NOT DEFINED" : {
+
+    },
     "Exclude apps" : {
       "localizations" : {
         "en" : {
@@ -308,6 +314,9 @@
           }
         }
       }
+    },
+    "Exit" : {
+
     },
     "Filename.mp4" : {
 
@@ -333,9 +342,6 @@
       }
     },
     "Got it!" : {
-
-    },
-    "Hello, World!" : {
 
     },
     "Hide scrollbar" : {
@@ -371,6 +377,9 @@
 
     },
     "Keyboard shortcuts" : {
+
+    },
+    "Later" : {
 
     },
     "Made with 🫶🏻 by not so boring not.people" : {
@@ -432,6 +441,9 @@
     "Minimum hover duration" : {
 
     },
+    "Need Restart" : {
+
+    },
     "No excludes" : {
       "localizations" : {
         "en" : {
@@ -443,6 +455,12 @@
       }
     },
     "Notch behavior" : {
+
+    },
+    "OK" : {
+
+    },
+    "One or more files failed to load" : {
 
     },
     "Only app icon" : {
@@ -476,6 +494,9 @@
       }
     },
     "Preserve scroll position" : {
+
+    },
+    "Press Option to delete" : {
 
     },
     "Progress bar" : {
