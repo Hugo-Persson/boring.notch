@@ -187,7 +187,8 @@ struct SettingsView: View {
                 KeyboardShortcuts.Recorder("Microphone toggle shortcut", name: .toggleMicrophone)
                 VStack {
                     KeyboardShortcuts.Recorder("Keyboard backlight up", name: .decreaseBacklight)
-                    KeyboardShortcuts.Recorder("Keyboard backlight down", name: .increaseBacklight)}
+                    KeyboardShortcuts.Recorder("Keyboard backlight down", name: .increaseBacklight)
+                }
             } header :{
                 Text("Keyboard shortcuts")
             }
@@ -224,6 +225,12 @@ struct SettingsView: View {
             LaunchAtLogin.Toggle("Launch at login 🦄")
             Toggle("Enable haptics", isOn: $vm.enableHaptics)
             Toggle("Enable boring mirror", isOn: $vm.showMirror)
+            Picker("Mirror shape", selection: $vm.mirrorShape) {
+                Text("Circle")
+                    .tag(MirrorShapeEnum.circle)
+                Text("Square")
+                    .tag(MirrorShapeEnum.rectangle)
+            }
             Toggle("Menubar icon", isOn: $vm.showMenuBarIcon)
             Toggle("Settings icon in notch", isOn: $vm.settingsIconInNotch)
         } header: {

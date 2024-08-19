@@ -166,6 +166,9 @@
     "Check for Updates…" : {
 
     },
+    "Circle" : {
+
+    },
     "Clear all" : {
 
     },
@@ -432,6 +435,9 @@
     "Mirror" : {
 
     },
+    "Mirror shape" : {
+
+    },
     "No excludes" : {
       "localizations" : {
         "en" : {
@@ -600,6 +606,9 @@
           }
         }
       }
+    },
+    "Square" : {
+
     },
     "Support Us" : {
       "localizations" : {

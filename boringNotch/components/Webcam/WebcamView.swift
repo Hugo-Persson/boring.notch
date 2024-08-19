@@ -9,6 +9,7 @@ import SwiftUI
 import AVFoundation
 
 struct CircularPreviewView: View {
+    @EnvironmentObject var vm: BoringViewModel
     @ObservedObject var webcamManager: WebcamManager
     
     var body: some View {
@@ -17,14 +18,14 @@ struct CircularPreviewView: View {
                 if let previewLayer = webcamManager.previewLayer {
                     CameraPreviewLayerView(previewLayer: previewLayer)
                         .scaleEffect(x: -1, y: 1)
-                        .clipShape(Circle())
+                        .clipShape(RoundedRectangle(cornerRadius: vm.mirrorShape == .rectangle ? 12 : 100))
                         .frame(width: geometry.size.width, height: geometry.size.width)
                         .opacity(webcamManager.isSessionRunning ? 1 : 0)
                 }
                 
                 if !webcamManager.isSessionRunning {
                     ZStack {
-                        Circle()
+                        RoundedRectangle(cornerRadius: vm.mirrorShape == .rectangle ? 12 : 100)
                             .fill(Color(red: 20/255, green: 20/255, blue: 20/255))
                             .frame(width: geometry.size.width, height: geometry.size.width)
                         VStack (spacing: 8){

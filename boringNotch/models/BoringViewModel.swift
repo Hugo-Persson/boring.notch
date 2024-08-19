@@ -105,7 +105,8 @@ class BoringViewModel: NSObject, ObservableObject {
     }
     @Published var maxClipboardRecords: Int = 1000;
     @Published var clipBoardHistoryDuration: Int = 30
-    @Published var showMirror:Bool = true
+    @Published var showMirror: Bool = true
+    @Published var mirrorShape: MirrorShapeEnum = .circle
     @AppStorage("enableDownloadListener") var enableDownloadListener: Bool = false {
         didSet {
             self.objectWillChange.send()
