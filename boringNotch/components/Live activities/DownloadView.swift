@@ -15,7 +15,7 @@ struct DownloadArea: View {
     @EnvironmentObject var watcher: DownloadWatcher
 
     var body: some View {
-        HStack{
+        HStack(alignment: .center) {
             HStack{
                 Image(nsImage: appIcons.getIcon(bundleID: "org.yanex.marta")!)
                 VStack (alignment: .leading){
@@ -35,6 +35,6 @@ struct DownloadArea: View {
     }
 }
 
-#Preview{
-    DownloadArea().environmentObject(DownloadWatcher(folderPath:  nil, vm: BoringViewModel())).padding()
+#Preview {
+    DownloadArea().environmentObject(DownloadWatcher(vm: BoringViewModel())).padding()
 }

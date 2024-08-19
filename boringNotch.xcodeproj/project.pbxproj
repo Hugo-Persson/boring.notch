@@ -57,6 +57,8 @@
 		14D570D22C5F6C6A0011E668 /* BoringExtrasMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D570D12C5F6C6A0011E668 /* BoringExtrasMenu.swift */; };
 		14D570D52C5F710B0011E668 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D570D42C5F710B0011E668 /* constants.swift */; };
 		14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEA92C70BF610062E83F /* DownloadView.swift */; };
+		14E9FEAC2C7230CA0062E83F /* FileAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */; };
+		14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */; };
 		B10F849F2C6B5BCC009F3026 /* NotchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10F849E2C6B5BCC009F3026 /* NotchContentView.swift */; };
 		B10F84A32C6C9596009F3026 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10F84A22C6C9596009F3026 /* TestView.swift */; };
 		B15063522C63D41A00EBB0E3 /* Image2Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15063512C63D41A00EBB0E3 /* Image2Color.swift */; };
@@ -154,6 +156,8 @@
 		14D570D12C5F6C6A0011E668 /* BoringExtrasMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoringExtrasMenu.swift; sourceTree = "<group>"; };
 		14D570D42C5F710B0011E668 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		14E9FEA92C70BF610062E83F /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
+		14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccessManager.swift; sourceTree = "<group>"; };
+		14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Bouncing.swift"; sourceTree = "<group>"; };
 		B10F849E2C6B5BCC009F3026 /* NotchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchContentView.swift; sourceTree = "<group>"; };
 		B10F84A22C6C9596009F3026 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		B15063512C63D41A00EBB0E3 /* Image2Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image2Color.swift; sourceTree = "<group>"; };
@@ -273,6 +277,7 @@
 				14288DF62C6E956200B9F80C /* DisplayManager.swift */,
 				14288DFF2C6E9F4500B9F80C /* MicrophoneManager.swift */,
 				14288E052C6EB6F400B9F80C /* ClipboardManager.swift */,
+				14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */,
 			);
 			path = managers;
 			sourceTree = "<group>";
@@ -395,6 +400,7 @@
 				B18654352C6F4616000B926A /* ClipboardHistoryWindow.swift */,
 				B1CE8CFD2C6F659400DD9871 /* KeyboardShortcutsHelper.swift */,
 				14288E1C2C6FCC2500B9F80C /* NSScreen+Extension.swift */,
+				14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -556,6 +562,7 @@
 				14D570B92C5E98A20011E668 /* drop.swift in Sources */,
 				14288E062C6EB6F400B9F80C /* ClipboardManager.swift in Sources */,
 				B1C974342C642B6D0000E707 /* MarqueeTextView.swift in Sources */,
+				14E9FEAC2C7230CA0062E83F /* FileAccessManager.swift in Sources */,
 				14288E1D2C6FCC2500B9F80C /* NSScreen+Extension.swift in Sources */,
 				14288DDB2C6E015000B9F80C /* KeyboardManager.m in Sources */,
 				14288DDA2C6E015000B9F80C /* BrightnessControl.m in Sources */,
@@ -571,6 +578,7 @@
 				14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */,
 				B1B112912C6A572100093D8F /* EditPanelView.swift in Sources */,
 				14288E002C6E9F4500B9F80C /* MicrophoneManager.swift in Sources */,
+				14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */,
 				14D570C92C5F38890011E668 /* BoringViewModel.swift in Sources */,
 				14D570BC2C5E98EB0011E668 /* generic.swift in Sources */,
 				14D570C42C5EBE170011E668 /* BuyMeCoffee.swift in Sources */,
@@ -737,6 +745,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = NO;
 				CODE_SIGN_ENTITLEMENTS = boringNotch/boringNotch.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -744,7 +753,7 @@
 				CURRENT_PROJECT_VERSION = "1.9+1";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"boringNotch/Preview Content\"";
-				DEVELOPMENT_TEAM = 342QMGS27Q;
+				DEVELOPMENT_TEAM = JPWMG84CH8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -781,6 +790,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = NO;
 				CODE_SIGN_ENTITLEMENTS = boringNotch/boringNotch.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -788,7 +798,7 @@
 				CURRENT_PROJECT_VERSION = "1.9+1";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"boringNotch/Preview Content\"";
-				DEVELOPMENT_TEAM = 342QMGS27Q;
+				DEVELOPMENT_TEAM = JPWMG84CH8;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

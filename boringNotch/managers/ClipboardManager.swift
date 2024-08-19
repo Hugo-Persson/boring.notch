@@ -136,7 +136,6 @@ class ClipboardManager : ObservableObject {
     
     
     func startMonitoring() {
-        
         eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .keyDown]) { [weak self] event in
             if event.modifierFlags.contains(.command) && event.charactersIgnoringModifiers == "c" {
                 self?.captureClipboardText()
@@ -291,7 +290,6 @@ class ClipboardManager : ObservableObject {
         
         if let documentsDirectory = documentsDirectory {
             let plistURL = documentsDirectory.appendingPathComponent(plistFileName)
-            print(plistURL.path)
             return plistURL.path
         }
         

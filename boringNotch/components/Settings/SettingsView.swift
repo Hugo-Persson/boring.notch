@@ -54,7 +54,7 @@ struct SettingsView: View {
     @ViewBuilder
     func GeneralSettings() -> some View {
         Form {
-            nonSavingSettingsBadge()
+            warningBadge("Your Settings will not be restored on restart", "By doing this, we can quickly address global bugs. It will be enabled later on.")
             
             Section {
                 HStack() {
@@ -105,8 +105,10 @@ struct SettingsView: View {
     @ViewBuilder
     func Downloads() -> some View {
         Form {
+            warningBadge("We don't support safari downloads yet", "It will be supported later on.")
             Section {
                 Toggle("Show download progress", isOn: $vm.enableDownloadListener)
+                Toggle("Enable Safari Downloads", isOn: $vm.enableSafariDownloads).disabled(!vm.enableDownloadListener)
                 Picker("Download indicator style", selection: $vm.selectedDownloadIndicatorStyle) {
                     Text("Progress bar")
                         .tag(DownloadIndicatorStyle.progress)
@@ -392,16 +394,16 @@ struct SettingsView: View {
             .clipShape(.capsule)
     }
     
-    func nonSavingSettingsBadge() -> some View {
+    func warningBadge(_ text: String, _ description: String) -> some View {
         Section {
             HStack(spacing: 12) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .font(.system(size: 22))
                     .foregroundStyle(.yellow)
                 VStack(alignment: .leading) {
-                    Text("Your settings will not be restored on restart")
+                    Text(text)
                         .font(.headline)
-                    Text("By doing this, we can quickly address global bugs. It will be enabled later on.")
+                    Text(description)
                         .foregroundStyle(.secondary)
                 }
                 Spacer()

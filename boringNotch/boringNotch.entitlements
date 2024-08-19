@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.security.temporary-exception.files.home-relative-path.read-only</key>
 	<array>
-		<string>Library/Safari/Download.plist</string>
+		<string>Library/Safari/Downloads.plist</string>
 	</array>
 	<key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
 	<array>
@@ -23,5 +23,7 @@
 	<true/>
 	<key>com.apple.security.network.server</key>
 	<true/>
+    <key>com.apple.security.files.bookmarks.app-scope</key>
+    <true/>
 </dict>
 </plist>

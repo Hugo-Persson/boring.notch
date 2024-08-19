@@ -12,7 +12,7 @@ struct BoringHeader: View {
     @State var percentage:Float
     @State var isCharging: Bool
     var body: some View {
-        HStack {
+        HStack(alignment: .center) {
             Text(vm.headerTitle)
                 .contentTransition(.numericText())
                 .font(.system(size: 12, design: .rounded))
@@ -46,8 +46,5 @@ struct BoringHeader: View {
     }}
 
 #Preview {
-    ZStack {
-        Rectangle().fill(.black)
-        BoringHeader(vm: .init(), percentage: 40, isCharging: true)
-    }
+   BoringHeader(vm: .init(), percentage: 40, isCharging: true)
 }

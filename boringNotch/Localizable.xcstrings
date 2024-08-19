@@ -142,9 +142,6 @@
         }
       }
     },
-    "By doing this, we can quickly address global bugs. It will be enabled later on." : {
-
-    },
     "Charging" : {
       "localizations" : {
         "en" : {
@@ -248,9 +245,6 @@
     "Download indicators" : {
 
     },
-    "Downloading" : {
-
-    },
     "Downloads" : {
       "localizations" : {
         "en" : {
@@ -291,6 +285,9 @@
       }
     },
     "Enable HUD replacement" : {
+
+    },
+    "Enable Safari Downloads" : {
 
     },
     "Enable shelf" : {
@@ -635,9 +632,6 @@
       }
     },
     "What's New" : {
-
-    },
-    "Your settings will not be restored on restart" : {
 
     }
   },

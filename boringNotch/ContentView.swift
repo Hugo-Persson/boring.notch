@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         BoringNotch(vm: vm, batteryModel: batteryModel, onHover: onHover, clipboardManager: clipboardManager!, microphoneHandler: microphoneHandler)
-            .frame(maxWidth: .infinity, maxHeight: Sizes().size.opened.height! + 20, alignment: .top)
+            .frame(maxWidth: .infinity, maxHeight: Sizes().size.opened.height!, alignment: .top)
             .edgesIgnoringSafeArea(.top)
             .transition(.slide.animation(vm.animation))
             .onAppear(perform: {

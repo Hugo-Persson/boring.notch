@@ -19,6 +19,7 @@ struct BoringNotch: View {
     @StateObject var batteryModel: BatteryStatusViewModel
     private var clipboardManager: ClipboardManager?
     @StateObject var microphoneHandler: MicrophoneHandler
+    @StateObject var downloadWatcher: DownloadWatcher
     @State private var haptics: Bool = false
     
     @State private var hoverStartTime: Date?
@@ -32,6 +33,8 @@ struct BoringNotch: View {
         _batteryModel = StateObject(wrappedValue: batteryModel)
         self.clipboardManager = clipboardManager
         _microphoneHandler =  StateObject(wrappedValue: microphoneHandler)
+        _downloadWatcher = StateObject(wrappedValue: DownloadWatcher(vm: vm))
+        
         self.onHover = onHover
     }
     
@@ -42,7 +45,7 @@ struct BoringNotch: View {
         let notchWidth: CGFloat = vm.notchState == .open
         ? vm.sizes.size.opened.width!
         : vm.expandingView.show
-        ? baseWidth + 160
+        ? baseWidth + (vm.expandingView.type == .download ? downloadSneakSize.width : batterySenakSize.width)
         : CGFloat(vm.firstLaunch ? 50 : 0) + baseWidth + (isFaceVisible ? 65 : 0)
         
         return notchWidth + (hoverAnimation ? 16 : 0)
@@ -52,7 +55,7 @@ struct BoringNotch: View {
         Rectangle()
             .foregroundColor(.black)
             .mask(NotchShape(cornerRadius: vm.notchState == .open ? vm.sizes.cornerRadius.opened.inset : (vm.sneakPeak.show ? 4 : 0) + vm.sizes.cornerRadius.closed.inset!))
-            .frame(width: calculateNotchWidth(), height: vm.notchState == .open ? (vm.sizes.size.opened.height!) : vm.sizes.size.closed.height! + (hoverAnimation ? 8 : !vm.expandingView.show && vm.sneakPeak.show ? 35 : 0))
+            .frame(width: calculateNotchWidth(), height: vm.notchState == .open ? (vm.sizes.size.opened.height! + (downloadWatcher.downloadFiles.isEmpty ? 0 : 40)) : vm.sizes.size.closed.height! + (hoverAnimation ? 8 : !vm.expandingView.show && vm.sneakPeak.show ? 35 : 0))
             .animation(notchAnimation, value: vm.expandingView.show)
             .animation(notchAnimation, value: musicManager.isPlaying)
             .animation(notchAnimation, value: musicManager.lastUpdated)
@@ -61,7 +64,7 @@ struct BoringNotch: View {
             .animation(notchAnimation, value: vm.sneakPeak.show)
             .overlay {
                 NotchContentView(clipboardManager: clipboardManager, microphoneHandler: microphoneHandler)
-                    //.environmentObject(DownloadWatcher(folderPath: nil, vm: vm))
+                    .environmentObject(downloadWatcher)
                     .environmentObject(vm)
                     .environmentObject(musicManager)
                     .environmentObject(batteryModel)
