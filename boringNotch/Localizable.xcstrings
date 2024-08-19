@@ -261,6 +261,9 @@
     "Edit layout" : {
 
     },
+    "Enable boring mirror" : {
+
+    },
     "Enable colored spectrograms" : {
       "localizations" : {
         "en" : {
@@ -424,6 +427,9 @@
 
     },
     "Minimum hover duration" : {
+
+    },
+    "Mirror" : {
 
     },
     "No excludes" : {

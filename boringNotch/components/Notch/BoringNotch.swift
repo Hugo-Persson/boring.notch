@@ -25,6 +25,7 @@ struct BoringNotch: View {
     @State private var hoverStartTime: Date?
     @State private var hoverTimer: Timer?
     @State private var hoverAnimation: Bool = false
+    @ObservedObject var webcamManager: WebcamManager
     
     init(vm: BoringViewModel, batteryModel: BatteryStatusViewModel, onHover: @escaping () -> Void, clipboardManager: ClipboardManager, microphoneHandler: MicrophoneHandler) {
         _vm = StateObject(wrappedValue: vm)
@@ -34,7 +35,7 @@ struct BoringNotch: View {
         self.clipboardManager = clipboardManager
         _microphoneHandler =  StateObject(wrappedValue: microphoneHandler)
         _downloadWatcher = StateObject(wrappedValue: DownloadWatcher(vm: vm))
-        
+        _webcamManager = ObservedObject(wrappedValue: WebcamManager())
         self.onHover = onHover
     }
     
@@ -63,7 +64,7 @@ struct BoringNotch: View {
             .animation(.smooth, value: vm.firstLaunch)
             .animation(notchAnimation, value: vm.sneakPeak.show)
             .overlay {
-                NotchContentView(clipboardManager: clipboardManager, microphoneHandler: microphoneHandler)
+                NotchContentView(clipboardManager: clipboardManager, microphoneHandler: microphoneHandler, webcamManager: webcamManager)
                     .environmentObject(downloadWatcher)
                     .environmentObject(vm)
                     .environmentObject(musicManager)

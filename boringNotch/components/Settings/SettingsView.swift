@@ -224,9 +224,9 @@ struct SettingsView: View {
             Toggle("Show cool face animation while inactivity", isOn: $vm.nothumanface.animation())
             LaunchAtLogin.Toggle("Launch at login 🦄")
             Toggle("Enable haptics", isOn: $vm.enableHaptics)
+            Toggle("Enable boring mirror", isOn: $vm.showMirror)
             Toggle("Menubar icon", isOn: $vm.showMenuBarIcon)
             Toggle("Settings icon in notch", isOn: $vm.settingsIconInNotch)
-            
         } header: {
             Text("Boring Controls")
         }

@@ -17,11 +17,12 @@ struct NotchContentView: View {
     var clipboardManager: ClipboardManager?
     @StateObject var microphoneHandler: MicrophoneHandler
     @EnvironmentObject var downloadWatcher: DownloadWatcher
+    @ObservedObject var webcamManager: WebcamManager
     
     var body: some View {
         VStack(alignment: vm.firstLaunch ? .center : .leading) {
             if vm.notchState == .open {
-                BoringHeader(vm: vm, percentage: batteryModel.batteryPercentage, isCharging: batteryModel.isPluggedIn).animation(.spring(response: 0.7, dampingFraction: 0.8, blendDuration: 0.8), value: vm.notchState).padding(.trailing, 8)
+                BoringHeader(vm: vm, percentage: batteryModel.batteryPercentage, isCharging: batteryModel.isPluggedIn).animation(.spring(response: 0.7, dampingFraction: 0.8, blendDuration: 0.8), value: vm.notchState)
                 if vm.firstLaunch {
                     Spacer()
                     HelloAnimation().frame(width: 180, height: 60).onAppear(perform: {
@@ -147,10 +148,13 @@ struct NotchContentView: View {
                         MusicVisualizer(avgColor: musicManager.avgColor, isPlaying: musicManager.isPlaying)
                             .frame(width: 30)
                     }
-                
+                    
                     
                     if vm.notchState == .open {
                         BoringSystemTiles(vm: vm, microphoneHandler: microphoneHandler).transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(0.1)))
+                        CircularPreviewView(
+                            webcamManager: webcamManager).frame(
+                                width: 90, height: 90)
                     }
                 }.padding(.bottom, vm.expandingView.show ? 0 : vm.notchState == .closed ? 0 : 15)
             }
@@ -216,7 +220,7 @@ struct NotchContentView: View {
         
         let dynamicWidth: CGFloat = chargingInfoWidth + musicPlayingWidth + closedWidth
             // Return the appropriate width based on the notch state
-        return vm.notchState == .open ? vm.musicPlayerSizes.player.size.opened.width! + 130 : dynamicWidth + (vm.sneakPeak.show ? -12 : 0)
+        return vm.notchState == .open ? vm.musicPlayerSizes.player.size.opened.width! + 210 : dynamicWidth + (vm.sneakPeak.show ? -12 : 0)
     }
 }
 
