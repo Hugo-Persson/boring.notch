@@ -1,9 +1,9 @@
-    //
-    //  BoringSystemTiles.swift
-    //  boringNotch
-    //
-    //  Created by Harsh Vardhan  Goswami  on 16/08/24.
-    //
+//
+//  BoringSystemTiles.swift
+//  boringNotch
+//
+//  Created by Harsh Vardhan  Goswami  on 16/08/24.
+//
 
 import Foundation
 import SwiftUI
@@ -17,10 +17,15 @@ struct SystemItemButton: View {
     
     var body: some View {
         Button(action: onTap) {
-            HStack {
-                Text(label!).font(.caption2).fontWeight(.regular)
-            }
-        }.buttonStyle(BouncingButtonStyle())
+            Text(label!)
+                .font(.caption2)
+                .fontWeight(.regular)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .allowsTightening(true)
+                .minimumScaleFactor(0.7)
+        }
+        .buttonStyle(BouncingButtonStyle())
+        .frame(width: 130)
     }
 }
 
@@ -54,26 +59,27 @@ struct BoringSystemTiles: View {
         _microphoneHandler = ObservedObject(wrappedValue: microphoneHandler)
     }
     
+    
+    
     var body: some View {
-        
-        HStack(spacing: nil) {
-            VStack {
+        Grid {
+            GridRow {
                 SystemItemButton(icon:"clipboard",onTap: {
                     vm?.openClipboard()
-                }, label: "✨ Clipboard history").frame(width: 130)
-                SystemItemButton(icon:"mic", onTap: {
-                    microphoneHandler.toggleMicrophone()
-                    vm?.close()
-                }, label: (microphoneHandler.currentMicStatus ? "😀" : "🤭") + " Toggle Microphone").frame(width: 130)
-            }
-            VStack{
+                }, label: "✨ Clipboard History")
                 SystemItemButton(icon: "keyboard", onTap: {
                     vm?.close()
                     vm?.toggleSneakPeak(status: true, type: .backlight, value: 1)
-                }, label: "💡 Keyboard backlight").frame(width: 140)
+                }, label: "💡 Keyboard Backlight")
+            }
+            GridRow {
+                SystemItemButton(icon:"mic", onTap: {
+                    microphoneHandler.toggleMicrophone()
+                    vm?.close()
+                }, label: (microphoneHandler.currentMicStatus ? "😀" : "🤫") + " Toggle Microphone")
                 SystemItemButton(icon: "lock", onTap: {
                     logout()
-                }, label: "🔒 Lock My Device").frame(width: 130)
+                }, label: "🔒 Lock My Device")
             }
         }
     }

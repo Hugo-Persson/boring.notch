@@ -47,7 +47,6 @@ struct SettingsView: View {
                 .tag(SettingsEnum.about)
         })
         .formStyle(.grouped)
-        .frame(width: 600, height: 500)
         .tint(vm.accentColor)
     }
     
@@ -105,7 +104,7 @@ struct SettingsView: View {
     @ViewBuilder
     func Downloads() -> some View {
         Form {
-            warningBadge("We don't support safari downloads yet", "It will be supported later on.")
+            warningBadge("We don't support Safari downloads yet", "It will be supported later on.")
             Section {
                 Toggle("Show download progress", isOn: $vm.enableDownloadListener)
                 Toggle("Enable Safari Downloads", isOn: $vm.enableSafariDownloads).disabled(!vm.enableDownloadListener)

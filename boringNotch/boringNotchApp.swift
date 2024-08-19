@@ -26,6 +26,8 @@ struct DynamicNotchApp: App {
             SettingsView(updaterController: updaterController)
                 .environmentObject(appDelegate.vm)
         }
+        .windowResizability(.contentSize)
+        .defaultSize(width: 500, height: 600)
         
         MenuBarExtra("boring.notch", systemImage: "music.note" , isInserted: $showMenuBarIcon) {
             SettingsLink(label: {

@@ -13,12 +13,13 @@ struct BouncingButtonStyle: ButtonStyle {
         configuration.label
             .padding(14)
             .background(RoundedRectangle(cornerRadius: 14)
-                .fill(Color(red: 20/255, green: 20/255, blue: 20/255)).frame(width: 130)
+                .fill(Color(red: 20/255, green: 20/255, blue: 20/255))
             )
             .scaleEffect(isPressed ? 0.9 : 1.0)
-            .animation(.spring(response: 0.3, dampingFraction: 0.3, blendDuration: 0.3), value: isPressed)
-            .onChange(of: configuration.isPressed) { pressed in
-                isPressed = pressed
+            .onChange(of: configuration.isPressed) { _, _ in
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.3, blendDuration: 0.3)) {
+                    isPressed.toggle()
+                }
             }
     }
 }

@@ -61,17 +61,13 @@ struct NotchContentView: View {
                     }
                     if vm.notchState == .open {
                         VStack(alignment: .leading, spacing: 5) {
-                            VStack(alignment: .leading, spacing: 3){
-                                Text(musicManager.songTitle)
-                                    .font(.headline)
-                                    .fontWeight(.regular)
-                                    .foregroundColor(.white)
-                                    .lineLimit(1)
-                                Text(musicManager.artistName)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                                    .lineLimit(1)
+                            GeometryReader { geo in
+                                VStack(alignment: .leading, spacing: 3){
+                                    MarqueeText(musicManager.songTitle, font: .headline, nsFont: .headline, textColor: .white, frameWidth: geo.size.width)
+                                    MarqueeText(musicManager.artistName, font: .subheadline, nsFont: .subheadline, textColor: .gray, frameWidth: geo.size.width)
+                                }
                             }
+                            .padding(.top)
                             HStack(spacing: 5) {
                                 Button {
                                     musicManager.previousTrack()
@@ -162,13 +158,13 @@ struct NotchContentView: View {
             if ((vm.notchState == .closed &&  vm.sneakPeak.show ) && (!vm.expandingView.show)) {
                 switch vm.sneakPeak.type {
                     case .music:
-                        HStack() {
-                            Image(systemName: "music.note").padding(.leading, 4)
-                            Text(musicManager.songTitle)
-                                .font(.headline)
-                                .fontWeight(.regular)
-                                .foregroundColor(.gray)
-                                .lineLimit(1)
+                            HStack(alignment: .center) {
+                                Image(systemName: "music.note")
+                                    .padding(.leading, 4)
+                                GeometryReader { geo in
+                                    MarqueeText(musicManager.songTitle, font: .headline, nsFont: .headline, textColor: .gray, frameWidth: geo.size.width)
+                            }
+                            .fixedSize(horizontal: false, vertical: true)
                         }
                         .foregroundStyle(.gray, .gray).transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(0.1))).padding(2)
                     case .volume:
