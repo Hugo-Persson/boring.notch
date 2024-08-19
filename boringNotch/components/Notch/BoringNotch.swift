@@ -72,6 +72,8 @@ struct BoringNotch: View {
                     .environmentObject(musicManager)
                     .environmentObject(batteryModel)
                     .environmentObject(volumeChangeListener)
+                    .environmentObject(microphoneHandler)
+                    .environmentObject(webcamManager)
             }
             .clipped()
             .onHover { hovering in

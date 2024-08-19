@@ -61,6 +61,17 @@
 		14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEA92C70BF610062E83F /* DownloadView.swift */; };
 		14E9FEAC2C7230CA0062E83F /* FileAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */; };
 		14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */; };
+		9A987A052C73CA66005CA465 /* Ext+FileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9879FB2C73CA66005CA465 /* Ext+FileProvider.swift */; };
+		9A987A062C73CA66005CA465 /* Ext+NSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9879FC2C73CA66005CA465 /* Ext+NSAlert.swift */; };
+		9A987A072C73CA66005CA465 /* Ext+NSImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9879FD2C73CA66005CA465 /* Ext+NSImage.swift */; };
+		9A987A082C73CA66005CA465 /* Ext+NSScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9879FE2C73CA66005CA465 /* Ext+NSScreen.swift */; };
+		9A987A092C73CA66005CA465 /* Ext+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9879FF2C73CA66005CA465 /* Ext+URL.swift */; };
+		9A987A0A2C73CA66005CA465 /* TrayDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A987A002C73CA66005CA465 /* TrayDrop.swift */; };
+		9A987A0B2C73CA66005CA465 /* TrayDrop+DropItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A987A012C73CA66005CA465 /* TrayDrop+DropItem.swift */; };
+		9A987A0C2C73CA66005CA465 /* TrayDrop+DropItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A987A022C73CA66005CA465 /* TrayDrop+DropItemView.swift */; };
+		9A987A0D2C73CA66005CA465 /* TrayDrop+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A987A032C73CA66005CA465 /* TrayDrop+View.swift */; };
+		9A987A102C73CA8D005CA465 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 9A987A0F2C73CA8D005CA465 /* Collections */; };
+		9A987A132C73CAA1005CA465 /* Pow in Frameworks */ = {isa = PBXBuildFile; productRef = 9A987A122C73CAA1005CA465 /* Pow */; };
 		9AB0C6BC2C73C9CB00F7CD30 /* NotchShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0C6BA2C73C9CB00F7CD30 /* NotchShelfView.swift */; };
 		9AB0C6BD2C73C9CB00F7CD30 /* NotchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */; };
 		B10F849F2C6B5BCC009F3026 /* NotchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10F849E2C6B5BCC009F3026 /* NotchContentView.swift */; };
@@ -164,6 +175,15 @@
 		14E9FEA92C70BF610062E83F /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
 		14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccessManager.swift; sourceTree = "<group>"; };
 		14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Bouncing.swift"; sourceTree = "<group>"; };
+		9A9879FB2C73CA66005CA465 /* Ext+FileProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+FileProvider.swift"; sourceTree = "<group>"; };
+		9A9879FC2C73CA66005CA465 /* Ext+NSAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+NSAlert.swift"; sourceTree = "<group>"; };
+		9A9879FD2C73CA66005CA465 /* Ext+NSImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+NSImage.swift"; sourceTree = "<group>"; };
+		9A9879FE2C73CA66005CA465 /* Ext+NSScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+NSScreen.swift"; sourceTree = "<group>"; };
+		9A9879FF2C73CA66005CA465 /* Ext+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Ext+URL.swift"; sourceTree = "<group>"; };
+		9A987A002C73CA66005CA465 /* TrayDrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrayDrop.swift; sourceTree = "<group>"; };
+		9A987A012C73CA66005CA465 /* TrayDrop+DropItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrayDrop+DropItem.swift"; sourceTree = "<group>"; };
+		9A987A022C73CA66005CA465 /* TrayDrop+DropItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrayDrop+DropItemView.swift"; sourceTree = "<group>"; };
+		9A987A032C73CA66005CA465 /* TrayDrop+View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TrayDrop+View.swift"; sourceTree = "<group>"; };
 		9AB0C6BA2C73C9CB00F7CD30 /* NotchShelfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotchShelfView.swift; sourceTree = "<group>"; };
 		9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotchHomeView.swift; sourceTree = "<group>"; };
 		B10F849E2C6B5BCC009F3026 /* NotchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchContentView.swift; sourceTree = "<group>"; };
@@ -192,6 +212,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A987A102C73CA8D005CA465 /* Collections in Frameworks */,
+				9A987A132C73CAA1005CA465 /* Pow in Frameworks */,
 				B1ECFA042C6FE58A002ACD87 /* CoreDisplay.framework in Frameworks */,
 				14288DEE2C6E020900B9F80C /* ApplicationServices.framework in Frameworks */,
 				14D0321D2C68F3350096E6A1 /* Sparkle in Frameworks */,
@@ -260,6 +282,7 @@
 		1471639B2C5D362F0068B555 /* components */ = {
 			isa = PBXGroup;
 			children = (
+				9A987A042C73CA66005CA465 /* Shelf */,
 				149E0B982C737D26006418B1 /* Webcam */,
 				14288DE72C6E01C800B9F80C /* ProgressIndicator.swift */,
 				B18654322C6F45CA000B926A /* Clipboard manager */,
@@ -409,6 +432,22 @@
 			path = strings;
 			sourceTree = "<group>";
 		};
+		9A987A042C73CA66005CA465 /* Shelf */ = {
+			isa = PBXGroup;
+			children = (
+				9A9879FB2C73CA66005CA465 /* Ext+FileProvider.swift */,
+				9A9879FC2C73CA66005CA465 /* Ext+NSAlert.swift */,
+				9A9879FD2C73CA66005CA465 /* Ext+NSImage.swift */,
+				9A9879FE2C73CA66005CA465 /* Ext+NSScreen.swift */,
+				9A9879FF2C73CA66005CA465 /* Ext+URL.swift */,
+				9A987A002C73CA66005CA465 /* TrayDrop.swift */,
+				9A987A012C73CA66005CA465 /* TrayDrop+DropItem.swift */,
+				9A987A022C73CA66005CA465 /* TrayDrop+DropItemView.swift */,
+				9A987A032C73CA66005CA465 /* TrayDrop+View.swift */,
+			);
+			path = Shelf;
+			sourceTree = "<group>";
+		};
 		B15063502C63D3F600EBB0E3 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -507,6 +546,8 @@
 				14D032192C68F32E0096E6A1 /* LaunchAtLogin */,
 				14D0321C2C68F3350096E6A1 /* Sparkle */,
 				B18654382C6F4990000B926A /* KeyboardShortcuts */,
+				9A987A0F2C73CA8D005CA465 /* Collections */,
+				9A987A122C73CAA1005CA465 /* Pow */,
 			);
 			productName = dynamicNotch;
 			productReference = 14CEF4122C5CAED300855D72 /* boringNotch.app */;
@@ -541,6 +582,8 @@
 				14D032182C68F32E0096E6A1 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
 				14D0321B2C68F3350096E6A1 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				B18654372C6F4990000B926A /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				9A987A0E2C73CA8D005CA465 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				9A987A112C73CAA1005CA465 /* XCRemoteSwiftPackageReference "Pow" */,
 			);
 			productRefGroup = 14CEF4132C5CAED300855D72 /* Products */;
 			projectDirPath = "";
@@ -580,12 +623,14 @@
 				14288E022C6EA62600B9F80C /* ClipboardView.swift in Sources */,
 				14D570CB2C5F4B2C0011E668 /* BatteryStatusViewModel.swift in Sources */,
 				14D570B92C5E98A20011E668 /* drop.swift in Sources */,
+				9A987A072C73CA66005CA465 /* Ext+NSImage.swift in Sources */,
 				14288E062C6EB6F400B9F80C /* ClipboardManager.swift in Sources */,
 				B1C974342C642B6D0000E707 /* MarqueeTextView.swift in Sources */,
 				14E9FEAC2C7230CA0062E83F /* FileAccessManager.swift in Sources */,
 				14288E1D2C6FCC2500B9F80C /* NSScreen+Extension.swift in Sources */,
 				14288DDB2C6E015000B9F80C /* KeyboardManager.m in Sources */,
 				14288DDA2C6E015000B9F80C /* BrightnessControl.m in Sources */,
+				9A987A052C73CA66005CA465 /* Ext+FileProvider.swift in Sources */,
 				14288DDD2C6E015000B9F80C /* KeyLightManager.swift in Sources */,
 				14288DE32C6E016F00B9F80C /* DownloadPlist.swift in Sources */,
 				14288DE82C6E01C800B9F80C /* ProgressIndicator.swift in Sources */,
@@ -594,11 +639,15 @@
 				149E0B9A2C737D40006418B1 /* WebcamView.swift in Sources */,
 				1471639A2C5D35FF0068B555 /* MusicManager.swift in Sources */,
 				B1B112932C6A577E00093D8F /* MouseTracker.swift in Sources */,
+				9A987A062C73CA66005CA465 /* Ext+NSAlert.swift in Sources */,
+				9A987A0C2C73CA66005CA465 /* TrayDrop+DropItemView.swift in Sources */,
 				14A7E5882C64A89C008C1BE9 /* HelloAnimation.swift in Sources */,
+				9A987A092C73CA66005CA465 /* Ext+URL.swift in Sources */,
 				9AB0C6BC2C73C9CB00F7CD30 /* NotchShelfView.swift in Sources */,
 				9AB0C6BD2C73C9CB00F7CD30 /* NotchHomeView.swift in Sources */,
 				14288E0A2C6F34AC00B9F80C /* KeyCode.swift in Sources */,
 				14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */,
+				9A987A082C73CA66005CA465 /* Ext+NSScreen.swift in Sources */,
 				B1B112912C6A572100093D8F /* EditPanelView.swift in Sources */,
 				14288E002C6E9F4500B9F80C /* MicrophoneManager.swift in Sources */,
 				14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */,
@@ -613,12 +662,15 @@
 				B10F84A32C6C9596009F3026 /* TestView.swift in Sources */,
 				1443E7F32C609DCE0027C1FC /* matters.swift in Sources */,
 				14D570D52C5F710B0011E668 /* constants.swift in Sources */,
+				9A987A0B2C73CA66005CA465 /* TrayDrop+DropItem.swift in Sources */,
 				1471A8592C6281BD0058408D /* BoringNotchWindow.swift in Sources */,
 				1471639F2C5D368B0068B555 /* BoringNotch.swift in Sources */,
 				14CEF4182C5CAED300855D72 /* ContentView.swift in Sources */,
 				14288DF52C6E7BF500B9F80C /* OSDUIManager.swift in Sources */,
+				9A987A0D2C73CA66005CA465 /* TrayDrop+View.swift in Sources */,
 				14D570B62C5E961A0011E668 /* NotchShape.swift in Sources */,
 				B18654362C6F4616000B926A /* ClipboardHistoryWindow.swift in Sources */,
+				9A987A0A2C73CA66005CA465 /* TrayDrop.swift in Sources */,
 				B10F849F2C6B5BCC009F3026 /* NotchContentView.swift in Sources */,
 				14CEF4162C5CAED300855D72 /* boringNotchApp.swift in Sources */,
 				14288DE52C6E016F00B9F80C /* SystemDownloadObserver.swift in Sources */,
@@ -777,7 +829,7 @@
 				CURRENT_PROJECT_VERSION = "1.9+1";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"boringNotch/Preview Content\"";
-				DEVELOPMENT_TEAM = 342QMGS27Q;
+				DEVELOPMENT_TEAM = ZN4DC4HT7C;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -822,7 +874,7 @@
 				CURRENT_PROJECT_VERSION = "1.9+1";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"boringNotch/Preview Content\"";
-				DEVELOPMENT_TEAM = 342QMGS27Q;
+				DEVELOPMENT_TEAM = ZN4DC4HT7C;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -892,6 +944,22 @@
 				minimumVersion = 2.6.4;
 			};
 		};
+		9A987A0E2C73CA8D005CA465 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.2;
+			};
+		};
+		9A987A112C73CAA1005CA465 /* XCRemoteSwiftPackageReference "Pow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EmergeTools/Pow";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
 		B18654372C6F4990000B926A /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
@@ -912,6 +980,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 14D0321B2C68F3350096E6A1 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		9A987A0F2C73CA8D005CA465 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A987A0E2C73CA8D005CA465 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		9A987A122C73CAA1005CA465 /* Pow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A987A112C73CAA1005CA465 /* XCRemoteSwiftPackageReference "Pow" */;
+			productName = Pow;
 		};
 		B18654382C6F4990000B926A /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;

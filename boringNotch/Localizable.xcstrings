@@ -302,6 +302,12 @@
     "Enable sneak peek" : {
 
     },
+    "Error" : {
+
+    },
+    "ERROR: VIEW NOT DEFINED" : {
+
+    },
     "Exclude apps" : {
       "localizations" : {
         "en" : {
@@ -311,6 +317,9 @@
           }
         }
       }
+    },
+    "Exit" : {
+
     },
     "Filename.mp4" : {
 
@@ -371,6 +380,9 @@
 
     },
     "Keyboard shortcuts" : {
+
+    },
+    "Later" : {
 
     },
     "Made with 🫶🏻 by not so boring not.people" : {
@@ -438,6 +450,9 @@
     "Mirror shape" : {
 
     },
+    "Need Restart" : {
+
+    },
     "No excludes" : {
       "localizations" : {
         "en" : {
@@ -449,6 +464,12 @@
       }
     },
     "Notch behavior" : {
+
+    },
+    "OK" : {
+
+    },
+    "One or more files failed to load" : {
 
     },
     "Only app icon" : {
@@ -482,6 +503,9 @@
       }
     },
     "Preserve scroll position" : {
+
+    },
+    "Press Option to delete" : {
 
     },
     "Progress bar" : {

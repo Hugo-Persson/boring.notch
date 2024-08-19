@@ -93,14 +93,6 @@ struct NotchContentView: View {
                     }
                     
 
-                    if vm.notchState == .open {
-                        BoringSystemTiles(vm: vm, microphoneHandler: microphoneHandler)
-                            .transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(0.1)))
-                        if vm.showMirror {
-                            CircularPreviewView(webcamManager: webcamManager)
-                                .frame(width: 90, height: 90)
-                        }
-                    }
                 }
                 .padding(.bottom, vm.expandingView.show ? 0 : vm.notchState == .closed ? 0 : 15)
             }
