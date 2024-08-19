@@ -142,9 +142,6 @@
         }
       }
     },
-    "By doing this, we can quickly address global bugs. It will be enabled later on." : {
-
-    },
     "Charging" : {
       "localizations" : {
         "en" : {
@@ -167,6 +164,9 @@
       }
     },
     "Check for Updates…" : {
+
+    },
+    "Circle" : {
 
     },
     "Clear all" : {
@@ -248,9 +248,6 @@
     "Download indicators" : {
 
     },
-    "Downloading" : {
-
-    },
     "Downloads" : {
       "localizations" : {
         "en" : {
@@ -265,6 +262,9 @@
 
     },
     "Edit layout" : {
+
+    },
+    "Enable boring mirror" : {
 
     },
     "Enable colored spectrograms" : {
@@ -293,16 +293,13 @@
     "Enable HUD replacement" : {
 
     },
+    "Enable Safari Downloads" : {
+
+    },
     "Enable shelf" : {
 
     },
     "Enable sneak peek" : {
-
-    },
-    "Error" : {
-
-    },
-    "ERROR: VIEW NOT DEFINED" : {
 
     },
     "Exclude apps" : {
@@ -314,9 +311,6 @@
           }
         }
       }
-    },
-    "Exit" : {
-
     },
     "Filename.mp4" : {
 
@@ -379,9 +373,6 @@
     "Keyboard shortcuts" : {
 
     },
-    "Later" : {
-
-    },
     "Made with 🫶🏻 by not so boring not.people" : {
       "localizations" : {
         "en" : {
@@ -441,7 +432,10 @@
     "Minimum hover duration" : {
 
     },
-    "Need Restart" : {
+    "Mirror" : {
+
+    },
+    "Mirror shape" : {
 
     },
     "No excludes" : {
@@ -455,12 +449,6 @@
       }
     },
     "Notch behavior" : {
-
-    },
-    "OK" : {
-
-    },
-    "One or more files failed to load" : {
 
     },
     "Only app icon" : {
@@ -494,9 +482,6 @@
       }
     },
     "Preserve scroll position" : {
-
-    },
-    "Press Option to delete" : {
 
     },
     "Progress bar" : {
@@ -622,6 +607,9 @@
         }
       }
     },
+    "Square" : {
+
+    },
     "Support Us" : {
       "localizations" : {
         "en" : {
@@ -659,9 +647,6 @@
       }
     },
     "What's New" : {
-
-    },
-    "Your settings will not be restored on restart" : {
 
     }
   },

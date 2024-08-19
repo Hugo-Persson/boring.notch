@@ -14,17 +14,13 @@ struct NotchHomeView: View {
     @EnvironmentObject var volumeChangeListener: VolumeChangeListener
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            VStack(alignment: .leading, spacing: 3) {
-                Text(musicManager.songTitle)
-                    .font(.headline)
-                    .fontWeight(.regular)
-                    .foregroundColor(.white)
-                    .lineLimit(1)
-                Text(musicManager.artistName)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .lineLimit(1)
+            GeometryReader { geo in
+                VStack(alignment: .leading, spacing: 3) {
+                    MarqueeText(musicManager.songTitle, font: .headline, nsFont: .headline, textColor: .white, frameWidth: geo.size.width)
+                    MarqueeText(musicManager.artistName, font: .subheadline, nsFont: .subheadline, textColor: .gray, frameWidth: geo.size.width)
+                }
             }
+            .padding(.top)
             HStack(spacing: 5) {
                 Button {
                     musicManager.previousTrack()

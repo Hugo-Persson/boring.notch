@@ -17,10 +17,8 @@ var f5Keys: [UInt16] = [
 ]
 
 class MicrophoneHandler : ObservableObject {
-    
     private var vm: BoringViewModel?
     private var hotkeyMonitor: Any?
-    
     private var defaultDeviceID: AudioObjectID = kAudioObjectUnknown
     private var firstTime: Bool = true;
     @Published var currentMicStatus: Bool = true {
@@ -80,6 +78,7 @@ class MicrophoneHandler : ObservableObject {
         }
         DispatchQueue.main.async {
             self.currentMicStatus = !self.isMicrophoneMuted()
+            self.objectWillChange.send()
         }
     }
     

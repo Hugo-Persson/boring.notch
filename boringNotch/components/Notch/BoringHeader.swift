@@ -12,11 +12,10 @@ struct BoringHeader: View {
     @State var percentage:Float
     @State var isCharging: Bool
     var body: some View {
-        HStack {
+        HStack(alignment: .center) {
             Text(vm.headerTitle)
                 .contentTransition(.numericText())
                 .font(.system(size: 12, design: .rounded))
-                .foregroundStyle(.gray)
             Spacer()
             HStack(spacing: 4){
                 if(vm.settingsIconInNotch) {
@@ -42,12 +41,9 @@ struct BoringHeader: View {
             }
             .animation(vm.animation?.delay(0.6), value: vm.notchState)
             .font(.system(.headline, design: .rounded))
-        }
+        }.foregroundColor(.gray)
     }}
 
 #Preview {
-    ZStack {
-        Rectangle().fill(.black)
-        BoringHeader(vm: .init(), percentage: 40, isCharging: true)
-    }
+   BoringHeader(vm: .init(), percentage: 40, isCharging: true)
 }

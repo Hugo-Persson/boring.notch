@@ -34,6 +34,8 @@
 		1471639A2C5D35FF0068B555 /* MusicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147163992C5D35FF0068B555 /* MusicManager.swift */; };
 		1471639F2C5D368B0068B555 /* BoringNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1471639E2C5D368B0068B555 /* BoringNotch.swift */; };
 		1471A8592C6281BD0058408D /* BoringNotchWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1471A8582C6281BD0058408D /* BoringNotchWindow.swift */; };
+		149E0B972C737D00006418B1 /* WebcamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E0B962C737D00006418B1 /* WebcamManager.swift */; };
+		149E0B9A2C737D40006418B1 /* WebcamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E0B992C737D40006418B1 /* WebcamView.swift */; };
 		14A7E5832C64169C008C1BE9 /* FilePermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A7E5822C64169C008C1BE9 /* FilePermissionsManager.swift */; };
 		14A7E5882C64A89C008C1BE9 /* HelloAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A7E5872C64A89C008C1BE9 /* HelloAnimation.swift */; };
 		14A7E5972C65FD31008C1BE9 /* boring.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 14A7E5962C65FD31008C1BE9 /* boring.m4a */; };
@@ -57,6 +59,10 @@
 		14D570D22C5F6C6A0011E668 /* BoringExtrasMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D570D12C5F6C6A0011E668 /* BoringExtrasMenu.swift */; };
 		14D570D52C5F710B0011E668 /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D570D42C5F710B0011E668 /* constants.swift */; };
 		14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEA92C70BF610062E83F /* DownloadView.swift */; };
+		14E9FEAC2C7230CA0062E83F /* FileAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */; };
+		14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */; };
+		9AB0C6BC2C73C9CB00F7CD30 /* NotchShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0C6BA2C73C9CB00F7CD30 /* NotchShelfView.swift */; };
+		9AB0C6BD2C73C9CB00F7CD30 /* NotchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */; };
 		B10F849F2C6B5BCC009F3026 /* NotchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10F849E2C6B5BCC009F3026 /* NotchContentView.swift */; };
 		B10F84A32C6C9596009F3026 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10F84A22C6C9596009F3026 /* TestView.swift */; };
 		B15063522C63D41A00EBB0E3 /* Image2Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15063512C63D41A00EBB0E3 /* Image2Color.swift */; };
@@ -127,6 +133,8 @@
 		147163992C5D35FF0068B555 /* MusicManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicManager.swift; sourceTree = "<group>"; };
 		1471639E2C5D368B0068B555 /* BoringNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoringNotch.swift; sourceTree = "<group>"; };
 		1471A8582C6281BD0058408D /* BoringNotchWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoringNotchWindow.swift; sourceTree = "<group>"; };
+		149E0B962C737D00006418B1 /* WebcamManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcamManager.swift; sourceTree = "<group>"; };
+		149E0B992C737D40006418B1 /* WebcamView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcamView.swift; sourceTree = "<group>"; };
 		14A7E5822C64169C008C1BE9 /* FilePermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePermissionsManager.swift; sourceTree = "<group>"; };
 		14A7E5872C64A89C008C1BE9 /* HelloAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloAnimation.swift; sourceTree = "<group>"; };
 		14A7E5962C65FD31008C1BE9 /* boring.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = boring.m4a; sourceTree = "<group>"; };
@@ -154,6 +162,10 @@
 		14D570D12C5F6C6A0011E668 /* BoringExtrasMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoringExtrasMenu.swift; sourceTree = "<group>"; };
 		14D570D42C5F710B0011E668 /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
 		14E9FEA92C70BF610062E83F /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
+		14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccessManager.swift; sourceTree = "<group>"; };
+		14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Bouncing.swift"; sourceTree = "<group>"; };
+		9AB0C6BA2C73C9CB00F7CD30 /* NotchShelfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotchShelfView.swift; sourceTree = "<group>"; };
+		9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotchHomeView.swift; sourceTree = "<group>"; };
 		B10F849E2C6B5BCC009F3026 /* NotchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchContentView.swift; sourceTree = "<group>"; };
 		B10F84A22C6C9596009F3026 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		B15063512C63D41A00EBB0E3 /* Image2Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image2Color.swift; sourceTree = "<group>"; };
@@ -248,6 +260,7 @@
 		1471639B2C5D362F0068B555 /* components */ = {
 			isa = PBXGroup;
 			children = (
+				149E0B982C737D26006418B1 /* Webcam */,
 				14288DE72C6E01C800B9F80C /* ProgressIndicator.swift */,
 				B18654322C6F45CA000B926A /* Clipboard manager */,
 				B18654312C6F45AE000B926A /* Live activities */,
@@ -273,8 +286,18 @@
 				14288DF62C6E956200B9F80C /* DisplayManager.swift */,
 				14288DFF2C6E9F4500B9F80C /* MicrophoneManager.swift */,
 				14288E052C6EB6F400B9F80C /* ClipboardManager.swift */,
+				14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */,
+				149E0B962C737D00006418B1 /* WebcamManager.swift */,
 			);
 			path = managers;
+			sourceTree = "<group>";
+		};
+		149E0B982C737D26006418B1 /* Webcam */ = {
+			isa = PBXGroup;
+			children = (
+				149E0B992C737D40006418B1 /* WebcamView.swift */,
+			);
+			path = Webcam;
 			sourceTree = "<group>";
 		};
 		14A7E58C2C656A5D008C1BE9 /* observers */ = {
@@ -395,6 +418,7 @@
 				B18654352C6F4616000B926A /* ClipboardHistoryWindow.swift */,
 				B1CE8CFD2C6F659400DD9871 /* KeyboardShortcutsHelper.swift */,
 				14288E1C2C6FCC2500B9F80C /* NSScreen+Extension.swift */,
+				14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -410,6 +434,8 @@
 		B186542F2C6F455E000B926A /* Notch */ = {
 			isa = PBXGroup;
 			children = (
+				9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */,
+				9AB0C6BA2C73C9CB00F7CD30 /* NotchShelfView.swift */,
 				1471639E2C5D368B0068B555 /* BoringNotch.swift */,
 				14D570B52C5E961A0011E668 /* NotchShape.swift */,
 				14D570C52C5F38210011E668 /* BoringHeader.swift */,
@@ -556,6 +582,7 @@
 				14D570B92C5E98A20011E668 /* drop.swift in Sources */,
 				14288E062C6EB6F400B9F80C /* ClipboardManager.swift in Sources */,
 				B1C974342C642B6D0000E707 /* MarqueeTextView.swift in Sources */,
+				14E9FEAC2C7230CA0062E83F /* FileAccessManager.swift in Sources */,
 				14288E1D2C6FCC2500B9F80C /* NSScreen+Extension.swift in Sources */,
 				14288DDB2C6E015000B9F80C /* KeyboardManager.m in Sources */,
 				14288DDA2C6E015000B9F80C /* BrightnessControl.m in Sources */,
@@ -564,13 +591,17 @@
 				14288DE82C6E01C800B9F80C /* ProgressIndicator.swift in Sources */,
 				14D570BE2C5EA0270011E668 /* PlaybackManager.swift in Sources */,
 				14288DFE2C6E9A4700B9F80C /* BoringSystemTiles.swift in Sources */,
+				149E0B9A2C737D40006418B1 /* WebcamView.swift in Sources */,
 				1471639A2C5D35FF0068B555 /* MusicManager.swift in Sources */,
 				B1B112932C6A577E00093D8F /* MouseTracker.swift in Sources */,
 				14A7E5882C64A89C008C1BE9 /* HelloAnimation.swift in Sources */,
+				9AB0C6BC2C73C9CB00F7CD30 /* NotchShelfView.swift in Sources */,
+				9AB0C6BD2C73C9CB00F7CD30 /* NotchHomeView.swift in Sources */,
 				14288E0A2C6F34AC00B9F80C /* KeyCode.swift in Sources */,
 				14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */,
 				B1B112912C6A572100093D8F /* EditPanelView.swift in Sources */,
 				14288E002C6E9F4500B9F80C /* MicrophoneManager.swift in Sources */,
+				14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */,
 				14D570C92C5F38890011E668 /* BoringViewModel.swift in Sources */,
 				14D570BC2C5E98EB0011E668 /* generic.swift in Sources */,
 				14D570C42C5EBE170011E668 /* BuyMeCoffee.swift in Sources */,
@@ -601,6 +632,7 @@
 				14A7E5832C64169C008C1BE9 /* FilePermissionsManager.swift in Sources */,
 				B15063542C63E18700EBB0E3 /* SettingsView.swift in Sources */,
 				14288DDC2C6E015000B9F80C /* AudioPlayer.swift in Sources */,
+				149E0B972C737D00006418B1 /* WebcamManager.swift in Sources */,
 				14288DF72C6E956200B9F80C /* DisplayManager.swift in Sources */,
 				14288E0C2C6F8EC000B9F80C /* AppIcons.swift in Sources */,
 				14288DE62C6E016F00B9F80C /* VolumeChangeListener.swift in Sources */,
@@ -737,6 +769,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = boringNotch/boringNotch.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -781,6 +814,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ALLOW_ENTITLEMENTS_MODIFICATION = YES;
 				CODE_SIGN_ENTITLEMENTS = boringNotch/boringNotch.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;

@@ -31,14 +31,20 @@ enum SneakContentType {
 
 struct SneakPeak {
     var show: Bool = false
-    var type: SneakContentType = .music
+    var type: SneakContentType = .volume
     var value: CGFloat = 0
+}
+
+enum BrowserType {
+    case chromium
+    case safari
 }
 
 struct ExpandedItem {
     var show: Bool = false
     var type: SneakContentType = .battery
     var value: CGFloat = 0
+    var browser: BrowserType = .chromium
 }
 
 class BoringViewModel: NSObject, ObservableObject {
@@ -103,15 +109,29 @@ class BoringViewModel: NSObject, ObservableObject {
                 
                 expandingViewDispatch = DispatchWorkItem { [weak self] in
                     guard let self = self else { return }
-                        self.toggleExpandingView(status: false, type: SneakContentType.battery)
+                    self.toggleExpandingView(status: false, type: SneakContentType.battery)
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: expandingViewDispatch!)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + (expandingView.type == .download ? 2 : 3), execute: expandingViewDispatch!)
             }
         }
     }
     @Published var maxClipboardRecords: Int = 1000;
     @Published var clipBoardHistoryDuration: Int = 30
-    @Published var enableDownloadListener: Bool = false
+    @Published var showMirror: Bool = true
+    @Published var mirrorShape: MirrorShapeEnum = .circle
+    @AppStorage("enableDownloadListener") var enableDownloadListener: Bool = false {
+        didSet {
+            self.objectWillChange.send()
+        }
+    }
+    @AppStorage("enableDownloadListener") var enableSafariDownloads: Bool = false {
+        didSet {
+            if enableSafariDownloads {
+                checkSafariDownloadAccess()
+            }
+        }
+    }
     
     deinit {
         destroy()
@@ -126,7 +146,24 @@ class BoringViewModel: NSObject, ObservableObject {
     init() {
         self.animation = self.animationLibrary.animation
         super.init()
-        print("BoringViewModel initialized")
+        
+        if(self.enableSafariDownloads){
+            checkSafariDownloadAccess()
+        }
+        
+    }
+    
+    func checkSafariDownloadAccess(){
+        let safariDownloadsAccessManager = FileAccessManager(
+            allowedFileTypes: ["plist"],
+            promptMessage: "Please grant read access to the plist file.",
+            promptTitle: "Grant Access",
+            bookmarkKey: "PlistFileBookmark",
+            subFolder: "Safari",
+            directoryType: .libraryDirectory
+        )
+        
+        safariDownloadsAccessManager.ensureReadAccess()
     }
     
     func open(){
@@ -149,7 +186,7 @@ class BoringViewModel: NSObject, ObservableObject {
         }
     }
     
-    func toggleExpandingView(status: Bool, type: SneakContentType, value: CGFloat = 0) {
+    func toggleExpandingView(status: Bool, type: SneakContentType, value: CGFloat = 0, browser: BrowserType = .chromium) {
         if self.expandingView.show {
             withAnimation(self.animationLibrary.animation) {
                 self.expandingView.show = false;
@@ -160,6 +197,7 @@ class BoringViewModel: NSObject, ObservableObject {
                 self.expandingView.show = status
                 self.expandingView.type = type
                 self.expandingView.value = value
+                self.expandingView.browser = browser
             }
         }
     }

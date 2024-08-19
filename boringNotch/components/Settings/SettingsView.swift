@@ -47,14 +47,13 @@ struct SettingsView: View {
                 .tag(SettingsEnum.about)
         })
         .formStyle(.grouped)
-        .frame(width: 600, height: 500)
         .tint(vm.accentColor)
     }
     
     @ViewBuilder
     func GeneralSettings() -> some View {
         Form {
-            nonSavingSettingsBadge()
+            warningBadge("Your Settings will not be restored on restart", "By doing this, we can quickly address global bugs. It will be enabled later on.")
             
             Section {
                 HStack() {
@@ -105,8 +104,10 @@ struct SettingsView: View {
     @ViewBuilder
     func Downloads() -> some View {
         Form {
+            warningBadge("We don't support Safari downloads yet", "It will be supported later on.")
             Section {
                 Toggle("Show download progress", isOn: $vm.enableDownloadListener)
+                Toggle("Enable Safari Downloads", isOn: $vm.enableSafariDownloads).disabled(!vm.enableDownloadListener)
                 Picker("Download indicator style", selection: $vm.selectedDownloadIndicatorStyle) {
                     Text("Progress bar")
                         .tag(DownloadIndicatorStyle.progress)
@@ -186,7 +187,8 @@ struct SettingsView: View {
                 KeyboardShortcuts.Recorder("Microphone toggle shortcut", name: .toggleMicrophone)
                 VStack {
                     KeyboardShortcuts.Recorder("Keyboard backlight up", name: .decreaseBacklight)
-                    KeyboardShortcuts.Recorder("Keyboard backlight down", name: .increaseBacklight)}
+                    KeyboardShortcuts.Recorder("Keyboard backlight down", name: .increaseBacklight)
+                }
             } header :{
                 Text("Keyboard shortcuts")
             }
@@ -222,9 +224,15 @@ struct SettingsView: View {
             Toggle("Show cool face animation while inactivity", isOn: $vm.nothumanface.animation())
             LaunchAtLogin.Toggle("Launch at login 🦄")
             Toggle("Enable haptics", isOn: $vm.enableHaptics)
+            Toggle("Enable boring mirror", isOn: $vm.showMirror)
+            Picker("Mirror shape", selection: $vm.mirrorShape) {
+                Text("Circle")
+                    .tag(MirrorShapeEnum.circle)
+                Text("Square")
+                    .tag(MirrorShapeEnum.rectangle)
+            }
             Toggle("Menubar icon", isOn: $vm.showMenuBarIcon)
             Toggle("Settings icon in notch", isOn: $vm.settingsIconInNotch)
-            
         } header: {
             Text("Boring Controls")
         }
@@ -392,16 +400,16 @@ struct SettingsView: View {
             .clipShape(.capsule)
     }
     
-    func nonSavingSettingsBadge() -> some View {
+    func warningBadge(_ text: String, _ description: String) -> some View {
         Section {
             HStack(spacing: 12) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .font(.system(size: 22))
                     .foregroundStyle(.yellow)
                 VStack(alignment: .leading) {
-                    Text("Your settings will not be restored on restart")
+                    Text(text)
                         .font(.headline)
-                    Text("By doing this, we can quickly address global bugs. It will be enabled later on.")
+                    Text(description)
                         .foregroundStyle(.secondary)
                 }
                 Spacer()

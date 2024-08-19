@@ -50,3 +50,8 @@ enum DownloadIconStyle {
     case onlyIcon
     case iconAndAppIcon
 }
+
+enum MirrorShapeEnum {
+    case rectangle
+    case circle
+}

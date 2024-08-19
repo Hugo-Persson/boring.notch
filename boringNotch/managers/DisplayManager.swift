@@ -113,7 +113,7 @@ class DisplayManager {
                 } catch {
                     print("Failed to poll brightness: \(error)")
                 }
-                Thread.sleep(forTimeInterval: 0.4)
+                Thread.sleep(forTimeInterval: 0.5)
             }
         }
     }
