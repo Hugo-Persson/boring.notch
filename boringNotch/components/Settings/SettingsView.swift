@@ -104,9 +104,9 @@ struct SettingsView: View {
     @ViewBuilder
     func Downloads() -> some View {
         Form {
-            warningBadge("We don't support Safari downloads yet", "It will be supported later on.")
+            warningBadge("We don't support downloads yet", "It will be supported later on.")
             Section {
-                Toggle("Show download progress", isOn: $vm.enableDownloadListener)
+                Toggle("Show download progress", isOn: $vm.enableDownloadListener).disabled(true)
                 Toggle("Enable Safari Downloads", isOn: $vm.enableSafariDownloads).disabled(!vm.enableDownloadListener)
                 Picker("Download indicator style", selection: $vm.selectedDownloadIndicatorStyle) {
                     Text("Progress bar")
@@ -173,13 +173,12 @@ struct SettingsView: View {
     func HUD() -> some View {
         Form {
             Section {
-                Toggle("Enable HUD replacement", isOn: .constant(false))
+                Toggle("Enable HUD replacement", isOn: $vm.hudReplacement)
                 Toggle("Enable glowing effect", isOn: $vm.systemEventIndicatorShadow.animation())
                 Toggle("Use accent color", isOn: $vm.systemEventIndicatorUseAccent.animation())
             } header: {
                 HStack {
                     Text("Customization")
-                    comingSoonTag()
                 }
             }
             

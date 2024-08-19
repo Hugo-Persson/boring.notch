@@ -79,8 +79,6 @@ class VolumeChangeListener: ObservableObject {
     )
     
     func startListening() {
-        print("Starting to listen")
-        
         guard !gVolumeEvents else { return }
         gVolumeEvents = true
         

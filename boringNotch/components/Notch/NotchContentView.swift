@@ -16,7 +16,7 @@ struct NotchContentView: View {
     @EnvironmentObject var volumeChangeListener: VolumeChangeListener
     var clipboardManager: ClipboardManager?
     @StateObject var microphoneHandler: MicrophoneHandler
-    @EnvironmentObject var downloadWatcher: DownloadWatcher
+        //    @EnvironmentObject var downloadWatcher: DownloadWatcher
     @ObservedObject var webcamManager: WebcamManager
     
     var body: some View {
@@ -66,8 +66,7 @@ struct NotchContentView: View {
                                     MarqueeText(musicManager.songTitle, font: .headline, nsFont: .headline, textColor: .white, frameWidth: geo.size.width)
                                     MarqueeText(musicManager.artistName, font: .subheadline, nsFont: .subheadline, textColor: .gray, frameWidth: geo.size.width)
                                 }
-                            }
-                            .padding(.top)
+                            }.padding(.top)
                             HStack(spacing: 5) {
                                 Button {
                                     musicManager.previousTrack()
@@ -158,42 +157,42 @@ struct NotchContentView: View {
                 .padding(.bottom, vm.expandingView.show ? 0 : vm.notchState == .closed ? 0 : 15)
             }
             
-            if ((vm.notchState == .closed &&  vm.sneakPeak.show ) && (!vm.expandingView.show)) {
+            if ((vm.notchState == .closed && vm.sneakPeak.show ) && (!vm.expandingView.show)) {
                 switch vm.sneakPeak.type {
                     case .music:
-                            HStack(alignment: .center) {
-                                Image(systemName: "music.note")
-                                    .padding(.leading, 4)
-                                GeometryReader { geo in
-                                    MarqueeText(musicManager.songTitle, font: .headline, nsFont: .headline, textColor: .gray, frameWidth: geo.size.width)
+                        HStack(alignment: .center) {
+                            Image(systemName: "music.note")
+                                .padding(.leading, 4)
+                            GeometryReader { geo in
+                                MarqueeText(musicManager.songTitle, font: .headline, nsFont: .headline, textColor: .gray, frameWidth: geo.size.width).padding(.top, -3)
                             }
                             .fixedSize(horizontal: false, vertical: true)
                         }
                         .foregroundStyle(.gray, .gray).transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(0.1))).padding(2)
                     case .volume:
-                        SystemEventIndicatorModifier(eventType: .volume, value: $vm.sneakPeak.value, sendEventBack: {
-                            print("Volume changed")
+                        SystemEventIndicatorModifier(eventType: .volume, value: $vm.sneakPeak.value, sendEventBack: { newVolume in
+                            volumeChangeListener.setVolume(Float(newVolume))
                         })
                         .transition(.opacity.combined(with: .blurReplace))
                         .padding([.leading, .top], musicManager.isPlaying ? 4 : 0)
                         .padding(.trailing, musicManager.isPlaying ? 8 : 4)
                     case .brightness:
                         SystemEventIndicatorModifier(eventType: .brightness, value: $vm.sneakPeak.value, sendEventBack: {
-                            print("Volume changed")
+                            newBrigthness in try? DisplayManager.setDisplayBrightness(Float(newBrigthness))
                         })
                         .transition(.opacity.combined(with: .blurReplace))
                         .padding([.leading, .top], musicManager.isPlaying ? 4 : 0)
                         .padding(.trailing, musicManager.isPlaying ? 8 : 4)
                     case .backlight:
                         SystemEventIndicatorModifier(eventType: .backlight, value: $vm.sneakPeak.value, sendEventBack: {
-                            print("Volume changed")
+                            newBacklight in KeyLightManager(vm: vm).setKeyboardBacklight(brightness: Float(newBacklight))
                         })
                         .transition(.opacity.combined(with: .blurReplace))
                         .padding([.leading, .top], musicManager.isPlaying ? 4 : 0)
                         .padding(.trailing, musicManager.isPlaying ? 8 : 4)
                     case .mic:
                         SystemEventIndicatorModifier(eventType: .mic, value: $vm.sneakPeak.value, sendEventBack: {
-                            print("Volume changed")
+                            newMicValue in print("newMicValue")
                         }).transition(.opacity.combined(with: .blurReplace))
                             .padding([.leading, .top], musicManager.isPlaying ? 4 : 0)
                             .padding(.trailing, musicManager.isPlaying ? 8 : 4)
@@ -202,9 +201,9 @@ struct NotchContentView: View {
                 }
             }
             
-            if vm.notchState == .open && !downloadWatcher.downloadFiles.isEmpty {
-                DownloadArea().padding(.vertical, 10).transition(.blurReplace.animation(.spring(.bouncy(duration: 0.5)))).environmentObject(downloadWatcher)
-            }
+                //            if vm.notchState == .open && !downloadWatcher.downloadFiles.isEmpty {
+                //                DownloadArea().padding(.bottom, 15).transition(.blurReplace.animation(.spring(.bouncy(duration: 0.5)))).environmentObject(downloadWatcher)
+                //            }
         }
         .frame(width: calculateFrameWidthforNotchContent())
         .transition(.blurReplace.animation(.spring(.bouncy(duration: 0.5))))

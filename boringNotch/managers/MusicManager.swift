@@ -19,7 +19,7 @@ class MusicManager: ObservableObject {
     private var debounceToggle: DispatchWorkItem?
     private var musicSneakPeakDispatch: DispatchWorkItem?
     private var vm: BoringViewModel
-    @Published var songTitle: String = "I'm Handsome Handsome Handsome"
+    @Published var songTitle: String = "I'm Handsome"
     @Published var artistName: String = "Me"
     @Published var albumArt: NSImage = defaultImage
     var albumArtData: Data?

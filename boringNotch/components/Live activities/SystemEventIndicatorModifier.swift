@@ -10,43 +10,50 @@ import SwiftUI
 struct SystemEventIndicatorModifier: View {
     @EnvironmentObject var vm: BoringViewModel
     @State var eventType: SystemEventType
-    @Binding var value: CGFloat
+    @Binding var value: CGFloat {
+        didSet {
+            DispatchQueue.main.async {
+                self.sendEventBack(value)
+                self.vm.objectWillChange.send()
+            }
+        }
+    }
     let showSlider: Bool = false
-    var sendEventBack: () -> Void = {}
+    var sendEventBack: (CGFloat) -> Void
     
     var body: some View {
-            HStack(spacing: 14) {
-                switch (eventType) {
-                    case .volume:
-                        Image(systemName: SpeakerSymbol(value))
-                            .contentTransition(.interpolate)
-                            .frame(width: 20, height: 15, alignment: .leading)
-                    case .brightness:
-                        Image(systemName: "sun.max.fill")
-                            .contentTransition(.interpolate)
-                            .frame(width: 20, height: 15)
-                    case .backlight:
-                        Image(systemName: "keyboard")
-                            .contentTransition(.interpolate)
-                            .frame(width: 20, height: 15)
-                    case .mic:
-                        Image(systemName: "mic")
-                            .symbolVariant(value > 0 ? .none : .slash)
-                            .contentTransition(.interpolate)
-                            .frame(width: 20, height: 15)
-                }
-                if (eventType != .mic) {
-                    DraggableProgressBar(value: $value)
-                } else {
-                    Text("Mic \(value > 0 ? "unmuted" : "muted")")
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                        .allowsTightening(true)
-                }
+        HStack(spacing: 14) {
+            switch (eventType) {
+                case .volume:
+                    Image(systemName: SpeakerSymbol(value))
+                        .contentTransition(.interpolate)
+                        .frame(width: 20, height: 15, alignment: .leading)
+                case .brightness:
+                    Image(systemName: "sun.max.fill")
+                        .contentTransition(.interpolate)
+                        .frame(width: 20, height: 15)
+                case .backlight:
+                    Image(systemName: "keyboard")
+                        .contentTransition(.interpolate)
+                        .frame(width: 20, height: 15)
+                case .mic:
+                    Image(systemName: "mic")
+                        .symbolVariant(value > 0 ? .none : .slash)
+                        .contentTransition(.interpolate)
+                        .frame(width: 20, height: 15)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .symbolVariant(.fill)
-            .imageScale(.large)
+            if (eventType != .mic) {
+                DraggableProgressBar(value: $value)
+            } else {
+                Text("Mic \(value > 0 ? "unmuted" : "muted")")
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .allowsTightening(true)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .symbolVariant(.fill)
+        .imageScale(.large)
     }
     
     func SpeakerSymbol(_ value: CGFloat) -> String {
@@ -75,16 +82,16 @@ enum SystemEventType {
 #Preview {
     VStack(spacing: 20) {
         SystemEventIndicatorModifier(eventType: .volume, value: .constant(0.4), sendEventBack: {
-            print("Volume changed")
+            neww in print("Volume changed")
         })
         SystemEventIndicatorModifier(eventType: .brightness, value: .constant(0.7),sendEventBack: {
-            print("Volume changed")
+            neww in print("Volume changed")
         })
         SystemEventIndicatorModifier(eventType: .backlight, value: .constant(0.2), sendEventBack: {
-            print("Volume changed")
+            neww in print("Volume changed")
         })
         SystemEventIndicatorModifier(eventType: .mic, value: .constant(0.2), sendEventBack: {
-            print("Volume changed")
+            neww in print("Volume changed")
         })
     }
     .frame(width: 200)

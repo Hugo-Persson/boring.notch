@@ -20,7 +20,7 @@ enum SneakContentType {
 
 struct SneakPeak {
     var show: Bool = false
-    var type: SneakContentType = .volume
+    var type: SneakContentType = .music
     var value: CGFloat = 0
 }
 
@@ -49,7 +49,7 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var sizes : Sizes = Sizes()
     @Published var musicPlayerSizes: MusicPlayerElementSizes = MusicPlayerElementSizes()
     @Published var waitInterval: Double = 3
-    @Published var releaseName: String = "Sleeping Snail 🐌"
+    @Published var releaseName: String = "Glowing Panda 🐼 (Sleepy)"
     @Published var coloredSpectrogram: Bool = true
     @Published var accentColor: Color = .accentColor
     @Published var selectedDownloadIndicatorStyle: DownloadIndicatorStyle = .progress
@@ -68,7 +68,7 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var settingsIconInNotch: Bool = true
     private var sneakPeakDispatch: DispatchWorkItem?
     private var expandingViewDispatch: DispatchWorkItem?
-    @Published var enableSneakPeek: Bool = false
+    @Published var enableSneakPeek: Bool = true
     @Published var showCHPanel: Bool = false
     @Published var systemEventIndicatorShadow: Bool = true
     @Published var systemEventIndicatorUseAccent: Bool = false
@@ -90,7 +90,7 @@ class BoringViewModel: NSObject, ObservableObject {
         }
     }
     @Published var expandingView: ExpandedItem = ExpandedItem() {
-        didSet{
+        didSet {
             if expandingView.show {
                 expandingViewDispatch?.cancel()
                 
@@ -103,10 +103,11 @@ class BoringViewModel: NSObject, ObservableObject {
             }
         }
     }
+    @Published var hudReplacement: Bool =  true
     @Published var maxClipboardRecords: Int = 1000;
     @Published var clipBoardHistoryDuration: Int = 30
     @Published var showMirror: Bool = true
-    @Published var mirrorShape: MirrorShapeEnum = .circle
+    @Published var mirrorShape: MirrorShapeEnum = .rectangle
     @AppStorage("enableDownloadListener") var enableDownloadListener: Bool = false {
         didSet {
             self.objectWillChange.send()
@@ -114,9 +115,9 @@ class BoringViewModel: NSObject, ObservableObject {
     }
     @AppStorage("enableDownloadListener") var enableSafariDownloads: Bool = false {
         didSet {
-            if enableSafariDownloads {
-                checkSafariDownloadAccess()
-            }
+                //            if enableSafariDownloads {
+                //                checkSafariDownloadAccess()
+                //            }
         }
     }
     
@@ -134,9 +135,9 @@ class BoringViewModel: NSObject, ObservableObject {
         self.animation = self.animationLibrary.animation
         super.init()
         
-        if(self.enableSafariDownloads){
-            checkSafariDownloadAccess()
-        }
+            //        if(self.enableSafariDownloads){
+            //            checkSafariDownloadAccess()
+            //        }
         
     }
     

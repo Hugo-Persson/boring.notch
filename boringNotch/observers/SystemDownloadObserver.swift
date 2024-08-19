@@ -8,16 +8,32 @@ struct DownloadFile: Identifiable {
     var totalSize: Int64 = 0
     var progressPercentage: Double = 0.0
     var browser: BrowserType = .chromium
+    var name: String {
+        return url.lastPathComponent
+    }
+    
+    var formattedSize: String {
+        let totalSizeInMB = Double(totalSize) / 1_048_576.0
+        return String(format: "%.2fMB", totalSizeInMB)
+    }
 }
 
 
 class DownloadWatcher: ObservableObject {
+    var alreadyNotified: Bool = false
     @Published var downloadFiles: [DownloadFile] = [] {
         didSet {
-            if !downloadFiles.isEmpty {
-                withAnimation (vm.animationLibrary.animation) {
-                    vm.toggleExpandingView(status: true, type: .download, value: CGFloat(downloadFiles.first!.progress), browser: downloadFiles.first!.browser)
+            DispatchQueue.main.async {
+                
+                if self.downloadFiles.isEmpty {
+                    self.alreadyNotified = false
                 }
+                
+                if !self.downloadFiles.isEmpty && !self.alreadyNotified {
+                    self.vm.toggleExpandingView(status: true, type: .download, value: 0, browser: self.downloadFiles.first!.browser)
+                    self.alreadyNotified = true
+                }
+                self.objectWillChange.send()
             }
         }
     }
@@ -88,21 +104,18 @@ class DownloadWatcher: ObservableObject {
                 var bytesDownloaded = attributes[.size] as? Int64 ?? 0
                 
                 if file.browser == .safari {
-                        let downloadSizes: [Int64] = getSafariDownloadProgress(for: file)
-                        bytesDownloaded = downloadSizes[0]
-                        fileSize = downloadSizes[1]
-                        print("downloadSizes", downloadSizes)
+                    let downloadSizes: [Int64] = getSafariDownloadProgress(for: file)
+                    bytesDownloaded = downloadSizes[0]
+                    fileSize = downloadSizes[1]
                 }
                 
-                guard fileSize > 0 else { return nil }
+                    //                guard fileSize > 0 else { return nil }
                 
                 let progress = calculateProgress(bytesDownloaded: bytesDownloaded, totalSize: fileSize)
                 
-                print(progress)
-                
-                if progress >= 1.0 || progress.isNaN || progress.isInfinite {
-                    return nil // This will remove the file from tracking
-                }
+                    //                if progress >= 1.0 || progress.isNaN || progress.isInfinite {
+                    //                    return nil // This will remove the file from tracking
+                    //                }
                 
                 var updatedFile = file
                 updatedFile.totalSize = fileSize
@@ -139,7 +152,7 @@ class DownloadWatcher: ObservableObject {
             print("Error opening folder: \(errno)")
             return
         }
-
+        
         watcher = DispatchSource.makeFileSystemObjectSource(
             fileDescriptor: folderDescriptor,
             eventMask: .write,

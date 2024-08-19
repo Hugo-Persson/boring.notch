@@ -56,7 +56,7 @@ struct BoringNotch: View {
         Rectangle()
             .foregroundColor(.black)
             .mask(NotchShape(cornerRadius: vm.notchState == .open ? vm.sizes.cornerRadius.opened.inset : (vm.sneakPeak.show ? 4 : 0) + vm.sizes.cornerRadius.closed.inset!))
-            .frame(width: calculateNotchWidth(), height: vm.notchState == .open ? (vm.sizes.size.opened.height! + (downloadWatcher.downloadFiles.isEmpty ? 0 : 40)) : vm.sizes.size.closed.height! + (hoverAnimation ? 8 : !vm.expandingView.show && vm.sneakPeak.show ? 35 : 0))
+            .frame(width: calculateNotchWidth(), height: vm.notchState == .open ? (vm.sizes.size.opened.height! + (downloadWatcher.downloadFiles.isEmpty ? 0 : 50)) : vm.sizes.size.closed.height! + (hoverAnimation ? 8 : !vm.expandingView.show && vm.sneakPeak.show ? 35 : 0))
             .animation(notchAnimation, value: vm.expandingView.show)
             .animation(notchAnimation, value: musicManager.isPlaying)
             .animation(notchAnimation, value: musicManager.lastUpdated)
@@ -65,7 +65,7 @@ struct BoringNotch: View {
             .animation(notchAnimation, value: vm.sneakPeak.show)
             .overlay {
                 NotchContentView(clipboardManager: clipboardManager, microphoneHandler: microphoneHandler, webcamManager: webcamManager)
-                    .environmentObject(downloadWatcher)
+//                    .environmentObject(downloadWatcher)
                     .environmentObject(vm)
                     .environmentObject(musicManager)
                     .environmentObject(batteryModel)
