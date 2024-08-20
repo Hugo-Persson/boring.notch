@@ -28,13 +28,30 @@ struct CopiedItemView: View {
 }
 
 struct ClipboardItemUI: View {
+    @EnvironmentObject var vm: BoringViewModel
     @State private var hovered: Bool = false
     @State private var clicked: Bool = false
     let item: ClipboardItemStruct
+    let index: Int
     let onClick: () -> Void
     
     var body: some View {
-        Button(action: onClick) {
+        Button {
+            onClick()
+            withAnimation {
+                clicked = true
+            }
+            if vm.clipboardHistoryCloseAfterCopy {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    vm.showCHPanel = false
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation {
+                    clicked = false
+                }
+            }
+        } label: {
             ZStack(alignment: .bottomLeading) {
                 CopiedItemView(item: item)
                     .blur(radius: !clicked ? 0 : 10)
@@ -45,16 +62,6 @@ struct ClipboardItemUI: View {
                             .fill(hovered ? .white.opacity(0.08) : .black.opacity(0.08))
                             .strokeBorder(Color(nsColor: .textColor).opacity(0.08))
                     )
-                    .onTapGesture {
-                        withAnimation {
-                            clicked = true
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            withAnimation {
-                                clicked = false
-                            }
-                        }
-                    }
                     .overlay {
                         if clicked {
                             VStack(spacing: 15) {
@@ -82,7 +89,7 @@ struct ClipboardItemUI: View {
                         }
                     }
                     .padding([.leading, .bottom], 7)
-                if hovered {
+                if hovered || vm.clipboardHistoryAlwaysShowIcons {
                     Image(nsImage: appIcons.getIcon(bundleID: item.sourceAppBundle!) ?? NSImage())
                         .resizable()
                         .scaledToFit()
@@ -91,10 +98,23 @@ struct ClipboardItemUI: View {
                         .shadow(color: .black.opacity(0.3), radius: 5)
                         .transition(.scale.combined(with: .blurReplace))
                 }
+                
+                if index < 10 {
+                    Text("⌘ \(index + 1)")
+                        .font(.subheadline)
+                        .padding(.bottom)
+                        .padding(.trailing, 12)
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+                }
             }
             .frame(width: (NSScreen.main?.frame.size.width ?? 1800) / 6)
         }
         .buttonStyle(PlainButtonStyle())
+        .if(index < 10) { view in
+            view
+                .keyboardShortcut(KeyEquivalent(Character(String(index + 1))), modifiers: .command)
+        }
     }
 }
 
@@ -109,6 +129,22 @@ struct ClipboardView: View {
         VStack(spacing: 0) {
             HStack(spacing: 10) {
                 ExpandingSearch(isExpanded: $isExpanded, text: $clipboardManager.searchQuery)
+                
+                Menu {
+                    ForEach(Array(Set(self.clipboardManager.clipboardItems.map{ $0.type })), id: \.self) { category in
+                        Button("\(category.rawValue)") {}
+                    }
+                } label: {
+                    HStack {
+                        Text("Filter")
+                            .foregroundStyle(.secondary)
+                        Image(systemName: "line.horizontal.3.decrease")
+                    }
+                }
+                .menuStyle(.button)
+                .buttonStyle(AccessoryBarButtonStyle())
+                .tint(.secondary)
+                .controlSize(.extraLarge)
                 
                 Spacer()
                 
@@ -140,6 +176,7 @@ struct ClipboardView: View {
                                 ForEach(0..<self.clipboardManager.searchResults.count, id: \.self) { index in
                                     ClipboardItemUI(
                                         item: self.clipboardManager.searchResults[index],
+                                        index: index,
                                         onClick: {
                                             self.clipboardManager.copyItem(self.clipboardManager.searchResults[index])
                                         }
@@ -180,6 +217,7 @@ struct ClipboardView: View {
 }
 
 struct ExpandingSearch: View {
+    @EnvironmentObject var vm: BoringViewModel
     @Binding var isExpanded: Bool
     @State private var hovered: Bool = false
     @Binding var text: String
@@ -210,6 +248,12 @@ struct ExpandingSearch: View {
                 inputFocus = true
             }
         }
+        .onChange(of: vm.showCHPanel) { _, _ in
+            if vm.clipboardHistoryAutoFocusSearch {
+                isExpanded = true
+                inputFocus = true
+            }
+        }
         .onContinuousHover { phase in
             switch phase {
                 case .active:
@@ -224,6 +268,7 @@ struct ExpandingSearch: View {
         }
         .onExitCommand(perform: {
             withAnimation(.smooth) {
+                text = ""
                 isExpanded = false
             }
         })

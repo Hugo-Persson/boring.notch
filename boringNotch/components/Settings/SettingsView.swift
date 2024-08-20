@@ -346,6 +346,12 @@ struct SettingsView: View {
                 
                 Toggle("Preserve scroll position", isOn: $vm.clipboardHistoryPreserveScrollPosition)
                 
+                Toggle("Always show source icon", isOn: $vm.clipboardHistoryAlwaysShowIcons)
+                
+                Toggle("Automatically focus the search field", isOn: $vm.clipboardHistoryAutoFocusSearch)
+                
+                Toggle("Close panel after copy", isOn: $vm.clipboardHistoryCloseAfterCopy)
+                
                 Picker("Keep history for", selection: .constant(2)) {
                     Text("1 day")
                         .tag(1)
@@ -387,6 +393,15 @@ struct SettingsView: View {
             .disabled(true)
 #endif
         }
+    }
+    
+    func proFeatureBadge () -> some View {
+        Text("Upgrade to Pro")
+            .foregroundStyle(Color(red: 0.545, green: 0.196, blue: 0.98))
+            .font(.footnote.bold())
+            .padding(.vertical, 3)
+            .padding(.horizontal, 6)
+            .background(RoundedRectangle(cornerRadius: 4).stroke(Color(red: 0.545, green: 0.196, blue: 0.98), lineWidth: 1))
     }
     
     func comingSoonTag () -> some View {

@@ -61,6 +61,7 @@
 		14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEA92C70BF610062E83F /* DownloadView.swift */; };
 		14E9FEAC2C7230CA0062E83F /* FileAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */; };
 		14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */; };
+		B10348D92C74E56000475897 /* ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10348D82C74E56000475897 /* ConditionalModifier.swift */; };
 		B10F849F2C6B5BCC009F3026 /* NotchContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10F849E2C6B5BCC009F3026 /* NotchContentView.swift */; };
 		B10F84A32C6C9596009F3026 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10F84A22C6C9596009F3026 /* TestView.swift */; };
 		B15063522C63D41A00EBB0E3 /* Image2Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15063512C63D41A00EBB0E3 /* Image2Color.swift */; };
@@ -162,6 +163,7 @@
 		14E9FEA92C70BF610062E83F /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
 		14E9FEAB2C7230CA0062E83F /* FileAccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccessManager.swift; sourceTree = "<group>"; };
 		14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Bouncing.swift"; sourceTree = "<group>"; };
+		B10348D82C74E56000475897 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
 		B10F849E2C6B5BCC009F3026 /* NotchContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchContentView.swift; sourceTree = "<group>"; };
 		B10F84A22C6C9596009F3026 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		B15063512C63D41A00EBB0E3 /* Image2Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image2Color.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				B1CE8CFD2C6F659400DD9871 /* KeyboardShortcutsHelper.swift */,
 				14288E1C2C6FCC2500B9F80C /* NSScreen+Extension.swift */,
 				14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */,
+				B10348D82C74E56000475897 /* ConditionalModifier.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -615,6 +618,7 @@
 				14CEF4162C5CAED300855D72 /* boringNotchApp.swift in Sources */,
 				14288DE52C6E016F00B9F80C /* SystemDownloadObserver.swift in Sources */,
 				B17266DF2C64DFA00031BA0D /* BundleInfos.swift in Sources */,
+				B10348D92C74E56000475897 /* ConditionalModifier.swift in Sources */,
 				14D570C22C5EAFBF0011E668 /* EmptyState.swift in Sources */,
 				14288DE42C6E016F00B9F80C /* SafariDownloadObserver.swift in Sources */,
 				B15063522C63D41A00EBB0E3 /* Image2Color.swift in Sources */,
