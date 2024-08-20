@@ -47,18 +47,6 @@
     "1" : {
 
     },
-    "1 day" : {
-
-    },
-    "1 month" : {
-
-    },
-    "1 week" : {
-
-    },
-    "1 year" : {
-
-    },
     "12%" : {
 
     },
@@ -83,6 +71,9 @@
       }
     },
     "Always show source icon" : {
+
+    },
+    "Appearance" : {
 
     },
     "Are you sure you want to clear your clipboard history?" : {
@@ -113,6 +104,9 @@
           }
         }
       }
+    },
+    "Behavior controls" : {
+
     },
     "Boring Controls" : {
       "localizations" : {
@@ -376,9 +370,6 @@
         }
       }
     },
-    "Keep history for" : {
-
-    },
     "Keep using the app and your copied content will be shown here" : {
 
     },
@@ -386,6 +377,9 @@
 
     },
     "Keyboard backlight up" : {
+
+    },
+    "Keyboard shortcut" : {
 
     },
     "Keyboard shortcuts" : {
@@ -614,6 +608,9 @@
           }
         }
       }
+    },
+    "Size limit" : {
+
     },
     "Software updates" : {
       "localizations" : {

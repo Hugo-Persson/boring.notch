@@ -96,8 +96,12 @@ struct SettingsView: View {
     @ViewBuilder
     func Charge() -> some View {
         Form {
-            Toggle("Show charging indicator", isOn: $vm.chargingInfoAllowed)
-            Toggle("Show battery indicator", isOn: $vm.showBattery.animation())
+            Section {
+                Toggle("Show charging indicator", isOn: $vm.chargingInfoAllowed)
+                Toggle("Show battery indicator", isOn: $vm.showBattery.animation())
+            } header: {
+                Text("General")
+            }
         }
     }
     
@@ -331,7 +335,10 @@ struct SettingsView: View {
             Section {
                 Toggle("Enable shelf", isOn: .constant(false))
             } header: {
-                comingSoonTag()
+                HStack {
+                    Text("General")
+                    comingSoonTag()
+                }
             }
             .disabled(true)
         }
@@ -341,31 +348,35 @@ struct SettingsView: View {
     func Clip() -> some View {
         Form {
             Section {
-                KeyboardShortcuts.Recorder("Clipboard history panel shortcut", name: .clipboardHistoryPanel)
-                
-                Toggle("Hide scrollbar", isOn: $vm.clipboardHistoryHideScrollbar)
-                
                 Toggle("Preserve scroll position", isOn: $vm.clipboardHistoryPreserveScrollPosition)
-                
-                Toggle("Always show source icon", isOn: $vm.clipboardHistoryAlwaysShowIcons)
-                
                 Toggle("Automatically focus the search field", isOn: $vm.clipboardHistoryAutoFocusSearch)
-                
                 Toggle("Close panel after copy", isOn: $vm.clipboardHistoryCloseAfterCopy)
-                
+            } header: {
+                Text("Behavior controls")
+            }
+            
+            Section {
+                Toggle("Hide scrollbar", isOn: $vm.clipboardHistoryHideScrollbar)
+                Toggle("Always show source icon", isOn: $vm.clipboardHistoryAlwaysShowIcons)
                 Slider(value: $vm.clipboardHistoryVisibleTilesCount, in: 4...7, step: 1) {
                     Text("Visible tiles count - \(vm.clipboardHistoryVisibleTilesCount, specifier: "%.0f")")
                 }
+            } header: {
+                Text("Appearance")
+            }
+            
+            Section {
+                KeyboardShortcuts.Recorder("Clipboard history panel shortcut", name: .clipboardHistoryPanel)
+            } header: {
+                Text("Keyboard shortcut")
+            }
                 
-                Picker("Keep history for", selection: .constant(2)) {
-                    Text("1 day")
-                        .tag(1)
-                    Text("1 week")
-                        .tag(7)
-                    Text("1 month")
-                        .tag(30)
-                    Text("1 year")
-                        .tag(365)
+            Section {
+                Picker("Size limit", selection: .constant("1 GB")) {
+                    ForEach(["100 MB", "500 MB", "1 GB", "2 GB", "5 GB", "10 GB", "Infinite"], id: \.self) { size in
+                        Text(size)
+                            .tag(size)
+                    }
                 }
                 
                 HStack {
@@ -391,6 +402,8 @@ struct SettingsView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
                 
+            } header: {
+                Text("General")
             }
         }
     }
