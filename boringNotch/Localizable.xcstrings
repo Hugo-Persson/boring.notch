@@ -20,6 +20,9 @@
     "%.1fs" : {
 
     },
+    "%@" : {
+
+    },
     "%d%%" : {
 
     },
@@ -33,6 +36,9 @@
 
     },
     "• New feature 1" : {
+
+    },
+    "⌘ %lld" : {
 
     },
     "0" : {
@@ -76,6 +82,9 @@
         }
       }
     },
+    "Always show source icon" : {
+
+    },
     "Are you sure you want to clear your clipboard history?" : {
 
     },
@@ -90,6 +99,9 @@
       }
     },
     "Automatically download updates" : {
+
+    },
+    "Automatically focus the search field" : {
 
     },
     "Battery" : {
@@ -188,6 +200,9 @@
 
     },
     "Close" : {
+
+    },
+    "Close panel after copy" : {
 
     },
     "Coming soon" : {
@@ -313,6 +328,9 @@
       }
     },
     "Filename.mp4" : {
+
+    },
+    "Filter" : {
 
     },
     "General" : {
@@ -621,6 +639,9 @@
       }
     },
     "This action cannot be undone" : {
+
+    },
+    "Upgrade to Pro" : {
 
     },
     "Use accent color" : {
