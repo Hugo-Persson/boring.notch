@@ -99,7 +99,7 @@ struct ClipboardItemUI: View {
                         .transition(.scale.combined(with: .blurReplace))
                 }
                 
-                if index < 10 {
+                if index < Int(vm.clipboardHistoryVisibleTilesCount) {
                     Text("⌘ \(index + 1)")
                         .font(.subheadline)
                         .padding(.bottom)
@@ -108,10 +108,10 @@ struct ClipboardItemUI: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                 }
             }
-            .frame(width: (NSScreen.main?.frame.size.width ?? 1800) / 6)
+            .frame(width: (NSScreen.main?.frame.size.width ?? 1800) / (vm.clipboardHistoryVisibleTilesCount + 1))
         }
         .buttonStyle(PlainButtonStyle())
-        .if(index < 10) { view in
+        .if(index < Int(vm.clipboardHistoryVisibleTilesCount)) { view in
             view
                 .keyboardShortcut(KeyEquivalent(Character(String(index + 1))), modifiers: .command)
         }

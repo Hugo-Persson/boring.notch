@@ -77,6 +77,7 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var clipboardHistoryAlwaysShowIcons: Bool = false
     @Published var clipboardHistoryAutoFocusSearch: Bool = false
     @Published var clipboardHistoryCloseAfterCopy: Bool = false
+    @Published var clipboardHistoryVisibleTilesCount: CGFloat = 5
     @Published var sneakPeak: SneakPeak = SneakPeak() {
         didSet {
             if sneakPeak.show {

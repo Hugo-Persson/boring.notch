@@ -667,6 +667,9 @@
         }
       }
     },
+    "Visible tiles count - %.0f" : {
+
+    },
     "What's New" : {
 
     }

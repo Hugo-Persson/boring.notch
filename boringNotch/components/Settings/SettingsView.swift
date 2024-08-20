@@ -353,6 +353,10 @@ struct SettingsView: View {
                 
                 Toggle("Close panel after copy", isOn: $vm.clipboardHistoryCloseAfterCopy)
                 
+                Slider(value: $vm.clipboardHistoryVisibleTilesCount, in: 4...7, step: 1) {
+                    Text("Visible tiles count - \(vm.clipboardHistoryVisibleTilesCount, specifier: "%.0f")")
+                }
+                
                 Picker("Keep history for", selection: .constant(2)) {
                     Text("1 day")
                         .tag(1)
@@ -388,11 +392,6 @@ struct SettingsView: View {
                 }
                 
             }
-#if DEBUG
-            .disabled(false)
-#else
-            .disabled(true)
-#endif
         }
     }
     
