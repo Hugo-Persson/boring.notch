@@ -1,9 +1,9 @@
-//
-//  BoringSystemTiles.swift
-//  boringNotch
-//
-//  Created by Harsh Vardhan  Goswami  on 16/08/24.
-//
+    //
+    //  BoringSystemTiles.swift
+    //  boringNotch
+    //
+    //  Created by Harsh Vardhan  Goswami  on 16/08/24.
+    //
 
 import Foundation
 import SwiftUI
@@ -14,15 +14,27 @@ struct SystemItemButton: View {
     @State var icon: String = "gear"
     var onTap: () -> Void
     @State var label: String?
+    @State var showEmojis: Bool = true
+    @State var emoji: String = "🔧"
     
     var body: some View {
         Button(action: onTap) {
-            Text(label!)
-                .font(.caption2)
-                .fontWeight(.regular)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .allowsTightening(true)
-                .minimumScaleFactor(0.7)
+            HStack{
+                if !showEmojis {
+                    Image(systemName: icon)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 10)
+                }
+                
+                Text((showEmojis ? "\(emoji) " : "") + label!)
+                    .font(.caption2)
+                    .fontWeight(.regular)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .allowsTightening(true)
+                    .minimumScaleFactor(0.7)
+            }
+            
         }
         .buttonStyle(BouncingButtonStyle())
         .frame(width: 130)
@@ -60,26 +72,25 @@ struct BoringSystemTiles: View {
     }
     
     
-    
     var body: some View {
         Grid {
             GridRow {
-                SystemItemButton(icon:"clipboard",onTap: {
+                SystemItemButton(icon:"clipboard", onTap: {
                     vm?.openClipboard()
-                }, label: "✨ Clipboard History")
-                SystemItemButton(icon: "keyboard", onTap: {
-                    vm?.close()
-                    vm?.toggleSneakPeak(status: true, type: .backlight, value: 1)
-                }, label: "💡 Keyboard Backlight")
+                }, label: "Clipboard History", showEmojis: vm!.showEmojis, emoji: "✨")
+                    //                SystemItemButton(icon: "keyboard", onTap: {
+                    //                    vm?.close()
+                    //                    vm?.toggleSneakPeak(status: true, type: .backlight, value: 1)
+                    //                }, label: "💡 Keyboard Backlight")
             }
             GridRow {
                 SystemItemButton(icon:"mic", onTap: {
                     microphoneHandler.toggleMicrophone()
                     vm?.close()
-                }, label: (microphoneHandler.currentMicStatus ? "😀" : "🤫") + " Toggle Microphone")
-                SystemItemButton(icon: "lock", onTap: {
-                    logout()
-                }, label: "🔒 Lock My Device")
+                }, label: "Toggle Microphone", showEmojis: vm!.showEmojis,  emoji: microphoneHandler.currentMicStatus ? "😀" : "🤫")
+                    //                SystemItemButton(icon: "lock", onTap: {
+                    //                    logout()
+                    //                }, label: "🔒 Lock My Device")
             }
         }
     }

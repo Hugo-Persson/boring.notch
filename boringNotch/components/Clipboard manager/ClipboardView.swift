@@ -111,7 +111,7 @@ struct ClipboardItemUI: View {
             .frame(width: (NSScreen.main?.frame.size.width ?? 1800) / 6)
         }
         .buttonStyle(PlainButtonStyle())
-        .if(index < 10) { view in
+        .if(index < 9) { view in
             view
                 .keyboardShortcut(KeyEquivalent(Character(String(index + 1))), modifiers: .command)
         }

@@ -172,23 +172,25 @@ struct SettingsView: View {
     @ViewBuilder
     func HUD() -> some View {
         Form {
+            warningBadge("We don't support system hud replacement yet", "It will be supported later on.")
             Section {
-                Toggle("Enable HUD replacement", isOn: $vm.hudReplacement)
-                Toggle("Enable glowing effect", isOn: $vm.systemEventIndicatorShadow.animation())
-                Toggle("Use accent color", isOn: $vm.systemEventIndicatorUseAccent.animation())
+                Toggle("Enable HUD replacement", isOn: $vm.hudReplacement).disabled(true)
+                Toggle("Enable glowing effect", isOn: $vm.systemEventIndicatorShadow.animation()).disabled(true)
+                Toggle("Use accent color", isOn: $vm.systemEventIndicatorUseAccent.animation()).disabled(true)
             } header: {
                 HStack {
                     Text("Customization")
+                    comingSoonTag()
                 }
             }
             
             Section {
                 KeyboardShortcuts.Recorder("Microphone toggle shortcut", name: .toggleMicrophone)
                 VStack {
-                    KeyboardShortcuts.Recorder("Keyboard backlight up", name: .decreaseBacklight)
-                    KeyboardShortcuts.Recorder("Keyboard backlight down", name: .increaseBacklight)
+                    KeyboardShortcuts.Recorder("Keyboard backlight up", name: .decreaseBacklight).disabled(true)
+                    KeyboardShortcuts.Recorder("Keyboard backlight down", name: .increaseBacklight).disabled(true)
                 }
-            } header :{
+            } header : {
                 Text("Keyboard shortcuts")
             }
         }
@@ -219,7 +221,7 @@ struct SettingsView: View {
     @ViewBuilder
     func boringControls() -> some View {
         Section {
-            
+            Toggle("Show emojis in notch", isOn: $vm.showEmojis)
             Toggle("Show cool face animation while inactivity", isOn: $vm.nothumanface.animation())
             LaunchAtLogin.Toggle("Launch at login 🦄")
             Toggle("Enable haptics", isOn: $vm.enableHaptics)
@@ -387,11 +389,6 @@ struct SettingsView: View {
                 }
                 
             }
-#if DEBUG
-            .disabled(false)
-#else
-            .disabled(true)
-#endif
         }
     }
     

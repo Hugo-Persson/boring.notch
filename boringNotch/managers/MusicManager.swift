@@ -31,6 +31,7 @@ class MusicManager: ObservableObject {
     @Published var isPlayerIdle: Bool = true
     @Published var animations: BoringAnimations = BoringAnimations()
     @Published var avgColor: NSColor = .white
+    @Published var bundleIdentifier: String = "com.apple.Music"
     
     private let mediaRemoteBundle: CFBundle
     private let MRMediaRemoteGetNowPlayingInfo: @convention(c) (DispatchQueue, @escaping ([String: Any]) -> Void) -> Void
@@ -72,13 +73,16 @@ class MusicManager: ObservableObject {
             }
             .store(in: &cancellables)
         
+        NotificationCenter.default.publisher(for: NSNotification.Name("kMRMediaRemoteNowPlayingApplicationDidChangeNotification")).sink {[weak self] _ in self?.bundleIdentifier = NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "com.apple.Music"
+        }.store(in: &cancellables)
+        
             // Keep existing observers for Spotify and Apple Music
         DistributedNotificationCenter.default().addObserver(
             forName: NSNotification.Name("com.spotify.client.PlaybackStateChanged"),
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            self?.fetchNowPlayingInfo()
+            self?.fetchNowPlayingInfo(bundle: "com.spotify.client")
         }
         
         DistributedNotificationCenter.default().addObserver(
@@ -86,14 +90,19 @@ class MusicManager: ObservableObject {
             object: nil,
             queue: .main
         ) { [weak self] _ in
-            self?.fetchNowPlayingInfo()
+            self?.fetchNowPlayingInfo(bundle: "com.apple.Music")
         }
     }
     
-    @objc func fetchNowPlayingInfo(bypass: Bool = false) {
+    @objc func fetchNowPlayingInfo(bypass: Bool = false, bundle: String? = nil) {
         if musicToggledManually && !bypass {
             return
         }
+        
+        if(bundle != nil) {
+            self.bundleIdentifier = bundle!
+        }
+        
         
         MRMediaRemoteGetNowPlayingInfo(DispatchQueue.main) { [weak self] information in
             guard let self = self else { self?.isPlaying = false; return }
@@ -136,6 +145,17 @@ class MusicManager: ObservableObject {
                let artworkImage = NSImage(data: albumArtData) {
                 self.albumArtData = albumArtData
                 self.updateAlbumArt(newAlbumArt: artworkImage)
+            }
+            
+            
+                // bundle identifier of the app playing music
+            
+            
+                // bundle identifier of the app playing music
+            
+            if let bundleIdentifier = information["kMRMediaRemoteNowPlayingInfoPlayerPath"] as? String {
+                print("bundleIdentifier", bundleIdentifier)
+                
             }
         }
     }

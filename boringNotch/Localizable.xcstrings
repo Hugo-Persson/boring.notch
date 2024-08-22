@@ -324,9 +324,6 @@
         }
       }
     },
-    "Filename.mp4" : {
-
-    },
     "Filter" : {
 
     },
@@ -611,6 +608,9 @@
           }
         }
       }
+    },
+    "Show emojis in notch" : {
+
     },
     "Software updates" : {
       "localizations" : {

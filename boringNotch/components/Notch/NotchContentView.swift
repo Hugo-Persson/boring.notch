@@ -20,10 +20,10 @@ struct NotchContentView: View {
     @ObservedObject var webcamManager: WebcamManager
     
     var body: some View {
-        VStack(alignment: vm.firstLaunch ? .center : .leading) {
+        VStack(alignment: vm.firstLaunch ? .center : .leading, spacing: 0) {
             if vm.notchState == .open {
-                BoringHeader(vm: vm, percentage: batteryModel.batteryPercentage, isCharging: batteryModel.isPluggedIn).animation(.spring(response: 0.7, dampingFraction: 0.8, blendDuration: 0.8), value: vm.notchState)
-                if vm.firstLaunch {
+                BoringHeader(vm: vm, percentage: batteryModel.batteryPercentage, isCharging: batteryModel.isPluggedIn).animation(.spring(response: 0.7, dampingFraction: 0.8, blendDuration: 0.8), value: vm.notchState).padding(.top, 10)
+            if vm.firstLaunch {
                     Spacer()
                     HelloAnimation().frame(width: 180, height: 60).onAppear(perform: {
                         vm.closeHello()
@@ -48,79 +48,91 @@ struct NotchContentView: View {
                         }
                     }
                     if !vm.expandingView.show && vm.currentView != .menu  {
-                        Image(nsImage: musicManager.albumArt)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(
-                                width: vm.notchState == .open ? vm.musicPlayerSizes.image.size.opened.width : vm.musicPlayerSizes.image.size.closed.width,
-                                height: vm.notchState == .open ? vm.musicPlayerSizes.image.size.opened.height : vm.musicPlayerSizes.image.size.closed.height
-                            )
-                            .cornerRadius(vm.notchState == .open ? vm.musicPlayerSizes.image.cornerRadius.opened.inset! : vm.musicPlayerSizes.image.cornerRadius.closed.inset!)
-                            .scaledToFit()
-                            .padding(.leading, vm.notchState == .open ? 0 : 3)
-                    }
-                    if vm.notchState == .open {
-                        VStack(alignment: .leading, spacing: 5) {
-                            GeometryReader { geo in
-                                VStack(alignment: .leading, spacing: 3){
-                                    MarqueeText(musicManager.songTitle, font: .headline, nsFont: .headline, textColor: .white, frameWidth: geo.size.width)
-                                    MarqueeText(musicManager.artistName, font: .subheadline, nsFont: .subheadline, textColor: .gray, frameWidth: geo.size.width)
-                                }
-                            }.padding(.top)
-                            HStack(spacing: 5) {
-                                Button {
-                                    musicManager.previousTrack()
-                                } label: {
-                                    Rectangle()
-                                        .fill(.clear)
-                                        .contentShape(Rectangle())
-                                        .frame(width: 30, height: 30)
-                                        .overlay {
-                                            Image(systemName: "backward.fill")
-                                                .foregroundColor(.white)
-                                                .imageScale(.medium)
+                        HStack (spacing: 6){
+                            ZStack {
+                                Image(nsImage: musicManager.albumArt)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(
+                                        width: vm.notchState == .open ? vm.musicPlayerSizes.image.size.opened.width : vm.musicPlayerSizes.image.size.closed.width,
+                                        height: vm.notchState == .open ? vm.musicPlayerSizes.image.size.opened.height : vm.musicPlayerSizes.image.size.closed.height
+                                    )
+                                    .cornerRadius(vm.notchState == .open ? vm.musicPlayerSizes.image.cornerRadius.opened.inset! : vm.musicPlayerSizes.image.cornerRadius.closed.inset!)
+                                    .scaledToFit()
+                                    .padding(.leading, vm.notchState == .open ? -10 : 3)
+                                
+                                
+                                Image(nsImage: appIcons.getIcon(bundleID: musicManager.bundleIdentifier)!)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: vm.notchState == .open ? 30 : 10, height: vm.notchState == .open ? 30 : 10)
+                                    .padding(.leading, vm.notchState == .open ? 70 : 20).padding(.top, vm.notchState == .open ? 75 : 15).transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(0.4)))
+                            }
+                            if vm.notchState == .open {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    GeometryReader { geo in
+                                        VStack(alignment: .leading, spacing: 3){
+                                            MarqueeText(musicManager.songTitle, font: .headline, nsFont: .headline, textColor: .white, frameWidth: geo.size.width)
+                                            MarqueeText(musicManager.artistName, font: .subheadline, nsFont: .subheadline, textColor: .gray, frameWidth: geo.size.width)
                                         }
-                                }
-                                Button {
-                                    print("tapped")
-                                    musicManager.togglePlayPause()
-                                } label: {
-                                    Rectangle()
-                                        .fill(.clear)
-                                        .contentShape(Rectangle())
-                                        .frame(width: 30, height: 30)
-                                        .overlay {
-                                            Image(systemName: musicManager.isPlaying ? "pause.fill" : "play.fill")
-                                                .foregroundColor(.white)
-                                                .contentTransition(.symbolEffect)
-                                                .imageScale(.large)
-                                        }
-                                }
-                                Button {
-                                    musicManager.nextTrack()
-                                } label: {
-                                    Rectangle()
-                                        .fill(.clear)
-                                        .contentShape(Rectangle())
-                                        .frame(width: 30, height: 30)
-                                        .overlay {
-                                            Capsule()
-                                                .fill(.black)
+                                    }.padding(.top)
+                                    HStack(spacing: 0) {
+                                        Button {
+                                            musicManager.previousTrack()
+                                        } label: {
+                                            Rectangle()
+                                                .fill(.clear)
+                                                .contentShape(Rectangle())
                                                 .frame(width: 30, height: 30)
                                                 .overlay {
-                                                    Image(systemName: "forward.fill")
+                                                    Image(systemName: "backward.fill")
                                                         .foregroundColor(.white)
                                                         .imageScale(.medium)
-                                                    
                                                 }
                                         }
+                                        Button {
+                                            print("tapped")
+                                            musicManager.togglePlayPause()
+                                        } label: {
+                                            Rectangle()
+                                                .fill(.clear)
+                                                .contentShape(Rectangle())
+                                                .frame(width: 30, height: 30)
+                                                .overlay {
+                                                    Image(systemName: musicManager.isPlaying ? "pause.fill" : "play.fill")
+                                                        .foregroundColor(.white)
+                                                        .contentTransition(.symbolEffect)
+                                                        .imageScale(.large)
+                                                }
+                                        }
+                                        Button {
+                                            musicManager.nextTrack()
+                                        } label: {
+                                            Rectangle()
+                                                .fill(.clear)
+                                                .contentShape(Rectangle())
+                                                .frame(width: 30, height: 30)
+                                                .overlay {
+                                                    Capsule()
+                                                        .fill(.black)
+                                                        .frame(width: 30, height: 30)
+                                                        .overlay {
+                                                            Image(systemName: "forward.fill")
+                                                                .foregroundColor(.white)
+                                                                .imageScale(.medium)
+                                                            
+                                                        }
+                                                }
+                                        }
+                                    }
                                 }
+                                .allowsHitTesting(!vm.notchMetastability)
+                                .transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(vm.notchState == .closed ? 0 : 0.1)))
+                                .buttonStyle(PlainButtonStyle())
                             }
                         }
-                        .allowsHitTesting(!vm.notchMetastability)
-                        .transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(vm.notchState == .closed ? 0 : 0.1)))
-                        .buttonStyle(PlainButtonStyle())
                     }
+                    
                     
                     if (vm.currentView != .menu) && vm.notchState != .open {
                         Spacer()
@@ -214,11 +226,11 @@ struct NotchContentView: View {
         let chargingInfoWidth: CGFloat = vm.expandingView.show ? ((vm.expandingView.type == .download ? downloadSneakSize.width : batterySenakSize.width) + 10) : 0
         let musicPlayingWidth: CGFloat = (!vm.firstLaunch && !vm.expandingView.show && (musicManager.isPlaying || (musicManager.isPlayerIdle ? vm.nothumanface : true))) ? 60 : -15
         
-        let closedWidth: CGFloat = vm.sizes.size.closed.width! - 10
+        let closedWidth: CGFloat = vm.sizes.size.closed.width! - 5
         
         let dynamicWidth: CGFloat = chargingInfoWidth + musicPlayingWidth + closedWidth
             // Return the appropriate width based on the notch state
-        return vm.notchState == .open ? vm.musicPlayerSizes.player.size.opened.width! + 210 : dynamicWidth + (vm.sneakPeak.show ? -12 : 0)
+        return vm.notchState == .open ? vm.musicPlayerSizes.player.size.opened.width! + 30 : dynamicWidth + (vm.sneakPeak.show ? -12 : 0)
     }
 }
 
