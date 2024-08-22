@@ -57,6 +57,8 @@
 
     },
     "1 year" : {
+    },
+    "12%" : {
 
     },
     "About" : {
@@ -80,6 +82,9 @@
       }
     },
     "Always show source icon" : {
+
+    },
+    "Appearance" : {
 
     },
     "Are you sure you want to clear your clipboard history?" : {
@@ -110,6 +115,9 @@
           }
         }
       }
+    },
+    "Behavior controls" : {
+
     },
     "Boring Controls" : {
       "localizations" : {
@@ -370,9 +378,6 @@
         }
       }
     },
-    "Keep history for" : {
-
-    },
     "Keep using the app and your copied content will be shown here" : {
 
     },
@@ -380,6 +385,9 @@
 
     },
     "Keyboard backlight up" : {
+
+    },
+    "Keyboard shortcut" : {
 
     },
     "Keyboard shortcuts" : {
@@ -610,6 +618,8 @@
       }
     },
     "Show emojis in notch" : {
+    },
+    "Size limit" : {
 
     },
     "Software updates" : {
@@ -663,6 +673,9 @@
           }
         }
       }
+    },
+    "Visible tiles count - %.0f" : {
+
     },
     "What's New" : {
 
