@@ -24,7 +24,9 @@ struct PanGestureView: NSViewRepresentable {
     func makeNSView(context: Context) -> NSView {
         let view = NSView()
         NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel]) { event in
-            context.coordinator.handleEvent(event)
+            if event.window == view.window {
+                context.coordinator.handleEvent(event)
+            }
             return event
         }
         return view

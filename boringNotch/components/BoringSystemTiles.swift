@@ -33,6 +33,7 @@ struct SystemItemButton: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .allowsTightening(true)
                     .minimumScaleFactor(0.7)
+                    .lineLimit(1)
             }
             
         }
