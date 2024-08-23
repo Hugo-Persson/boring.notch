@@ -66,6 +66,7 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var minimumHoverDuration: TimeInterval = 0.3
     @Published var notchMetastability: Bool = true // True if notch not open
     @Published var settingsIconInNotch: Bool = true
+    @Published var openNotchOnHover: Bool = false // TODO: Change this
     private var sneakPeakDispatch: DispatchWorkItem?
     private var expandingViewDispatch: DispatchWorkItem?
     @Published var enableSneakPeek: Bool = true

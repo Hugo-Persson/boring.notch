@@ -47,20 +47,6 @@
     "1" : {
 
     },
-    "1 day" : {
-
-    },
-    "1 month" : {
-
-    },
-    "1 week" : {
-
-    },
-    "1 year" : {
-    },
-    "12%" : {
-
-    },
     "About" : {
       "localizations" : {
         "en" : {
@@ -491,6 +477,9 @@
         }
       }
     },
+    "Open notch on hover" : {
+
+    },
     "Percentage" : {
       "localizations" : {
         "en" : {
@@ -618,6 +607,7 @@
       }
     },
     "Show emojis in notch" : {
+
     },
     "Size limit" : {
 

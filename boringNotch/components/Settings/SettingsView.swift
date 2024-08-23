@@ -53,7 +53,7 @@ struct SettingsView: View {
     @ViewBuilder
     func GeneralSettings() -> some View {
         Form {
-            warningBadge("Your Settings will not be restored on restart", "By doing this, we can quickly address global bugs. It will be enabled later on.")
+            warningBadge("Your settings will not be restored on restart", "By doing this, we can quickly address global bugs. It will be enabled later on.")
             
             Section {
                 HStack() {
@@ -229,6 +229,7 @@ struct SettingsView: View {
             Toggle("Show cool face animation while inactivity", isOn: $vm.nothumanface.animation())
             LaunchAtLogin.Toggle("Launch at login 🦄")
             Toggle("Enable haptics", isOn: $vm.enableHaptics)
+            Toggle("Open notch on hover", isOn: $vm.openNotchOnHover)
             Toggle("Enable boring mirror", isOn: $vm.showMirror)
             Picker("Mirror shape", selection: $vm.mirrorShape) {
                 Text("Circle")

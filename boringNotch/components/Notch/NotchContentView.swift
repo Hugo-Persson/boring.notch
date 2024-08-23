@@ -59,14 +59,17 @@ struct NotchContentView: View {
                                     )
                                     .cornerRadius(vm.notchState == .open ? vm.musicPlayerSizes.image.cornerRadius.opened.inset! : vm.musicPlayerSizes.image.cornerRadius.closed.inset!)
                                     .scaledToFit()
-                                    .padding(.leading, vm.notchState == .open ? -10 : 3)
+                                    .padding(.leading, vm.notchState == .open ? -10 : 6)
                                 
-                                
-                                Image(nsImage: appIcons.getIcon(bundleID: musicManager.bundleIdentifier)!)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: vm.notchState == .open ? 30 : 10, height: vm.notchState == .open ? 30 : 10)
-                                    .padding(.leading, vm.notchState == .open ? 70 : 20).padding(.top, vm.notchState == .open ? 75 : 15).transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(0.4)))
+                                if vm.notchState == .open {
+                                    Image(nsImage: appIcons.getIcon(bundleID: musicManager.bundleIdentifier)!)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: vm.notchState == .open ? 30 : 10, height: vm.notchState == .open ? 30 : 10)
+                                        .padding(.leading, vm.notchState == .open ? 70 : 20)
+                                        .padding(.top, vm.notchState == .open ? 75 : 15)
+                                        .transition(.scale.combined(with: .opacity).animation(.bouncy.delay(0.3)))
+                                }
                             }
                             if vm.notchState == .open {
                                 VStack(alignment: .leading, spacing: 0) {
@@ -160,6 +163,7 @@ struct NotchContentView: View {
                     if vm.notchState == .open {
                         BoringSystemTiles(vm: vm, microphoneHandler: microphoneHandler)
                             .transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(0.1)))
+                            .allowsHitTesting(!vm.notchMetastability)
                         if vm.showMirror {
                             CircularPreviewView(webcamManager: webcamManager)
                                 .frame(width: 90, height: 90)

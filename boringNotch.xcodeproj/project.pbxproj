@@ -83,6 +83,7 @@
 		B1D6FD432C6603730015F173 /* SoftwareUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D6FD422C6603730015F173 /* SoftwareUpdater.swift */; };
 		B1ECFA042C6FE58A002ACD87 /* CoreDisplay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1ECFA032C6FE58A002ACD87 /* CoreDisplay.framework */; };
 		B1ECFA052C6FE58A002ACD87 /* CoreDisplay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1ECFA032C6FE58A002ACD87 /* CoreDisplay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B1FEB4992C7686630066EBBC /* PanGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FEB4982C7686630066EBBC /* PanGesture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -183,6 +184,7 @@
 		B1D365CF2C6A9A6C0047BDBC /* SystemEventIndicatorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEventIndicatorModifier.swift; sourceTree = "<group>"; };
 		B1D6FD422C6603730015F173 /* SoftwareUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoftwareUpdater.swift; sourceTree = "<group>"; };
 		B1ECFA032C6FE58A002ACD87 /* CoreDisplay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreDisplay.framework; path = ../../../../../System/Library/Frameworks/CoreDisplay.framework; sourceTree = "<group>"; };
+		B1FEB4982C7686630066EBBC /* PanGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGesture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -418,6 +420,7 @@
 				14288E1C2C6FCC2500B9F80C /* NSScreen+Extension.swift */,
 				14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */,
 				B10348D82C74E56000475897 /* ConditionalModifier.swift */,
+				B1FEB4982C7686630066EBBC /* PanGesture.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 				14D570C22C5EAFBF0011E668 /* EmptyState.swift in Sources */,
 				14288DE42C6E016F00B9F80C /* SafariDownloadObserver.swift in Sources */,
 				B15063522C63D41A00EBB0E3 /* Image2Color.swift in Sources */,
+				B1FEB4992C7686630066EBBC /* PanGesture.swift in Sources */,
 				14288DFC2C6E95BF00B9F80C /* SensorMethod.swift in Sources */,
 				14D570D22C5F6C6A0011E668 /* BoringExtrasMenu.swift in Sources */,
 				14288DFA2C6E95AA00B9F80C /* SensorError.swift in Sources */,
@@ -774,7 +778,7 @@
 				CURRENT_PROJECT_VERSION = "1.9+1";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"boringNotch/Preview Content\"";
-				DEVELOPMENT_TEAM = JPWMG84CH8;
+				DEVELOPMENT_TEAM = 342QMGS27Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -821,7 +825,7 @@
 				CURRENT_PROJECT_VERSION = "1.9+1";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"boringNotch/Preview Content\"";
-				DEVELOPMENT_TEAM = JPWMG84CH8;
+				DEVELOPMENT_TEAM = 342QMGS27Q;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -111,7 +111,7 @@ struct ClipboardItemUI: View {
             .frame(width: (NSScreen.main?.frame.size.width ?? 1800) / (vm.clipboardHistoryVisibleTilesCount + 1))
         }
         .buttonStyle(PlainButtonStyle())
-        .if(index < Int(vm.clipboardHistoryVisibleTilesCount)) { view in
+        .conditionalModifier(index < Int(vm.clipboardHistoryVisibleTilesCount)) { view in
             view
                 .keyboardShortcut(KeyEquivalent(Character(String(index + 1))), modifiers: .command)
         }
