@@ -146,8 +146,8 @@ struct BoringNotch: View {
             .foregroundStyle(Color.black.opacity(0.001)) // fuck you apple and 0.001 is the smallest we can have
             .contentShape(Rectangle())
             .frame(width: calculateNotchWidth())
-            .onDrop(of: [.data], isTargeted: $dropTargeting) { _ in true }
-            .onChange(of: dropTargeting) { _, isTargeted in
+            .onDrop(of: [.data], isTargeted: $vm.dragDetectorTargeting) { _ in true }
+            .onChange(of: vm.anyDropZoneTargeting) { _, isTargeted in
                 if isTargeted, vm.notchState == .closed {
                     // Open the notch when a file is dragged over it
                     vm.currentView = .shelf
@@ -155,6 +155,7 @@ struct BoringNotch: View {
                 } else if !isTargeted {
                     // Close the notch when the dragged item leaves the area
                     let mouseLocation: NSPoint = NSEvent.mouseLocation
+                
                     let openedHeight = vm.sizes.size.opened.height!
                     let openedWidth = calculateNotchWidth()
                     guard let screen = NSScreen.main else { return }
@@ -165,11 +166,9 @@ struct BoringNotch: View {
                         width: openedWidth,
                         height: openedHeight
                     )
-                    if !rect.contains(mouseLocation) {
-                        print("Closing notch")
-                        withAnimation(.smooth) {
-                            vm.close()
-                        }
+                    print("Closing notch")
+                    withAnimation(.smooth) {
+                        vm.close()
                     }
                 }
             }

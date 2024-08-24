@@ -11,13 +11,11 @@ import Combine
 private let availableDirectories = FileManager
     .default
     .urls(for: .documentDirectory, in: .userDomainMask)
-let documentsDirectory = availableDirectories[-1]
-    .appendingPathComponent("BoringNotch")
+let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 let bundleIdentifier = Bundle.main.bundleIdentifier!
 let appVersion = "\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "") (\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""))"
 
-let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
-    .appendingPathComponent(bundleIdentifier)
+let temporaryDirectory = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
 
 enum SneakContentType {
     case brightness
@@ -87,6 +85,14 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var clipboardHistoryPreserveScrollPosition: Bool = false
     @Published var optionKeyPressed: Bool = false
     @Published var spacing: CGFloat = 16
+    
+   
+    @Published var dragDetectorTargeting: Bool = false
+    @Published var dropZoneTargeting: Bool = false
+    
+    @Published var anyDropZoneTargeting: Bool = false
+    
+    
     @Published var sneakPeak: SneakPeak = SneakPeak() {
         didSet {
             if sneakPeak.show {
@@ -150,6 +156,13 @@ class BoringViewModel: NSObject, ObservableObject {
         if(self.enableSafariDownloads){
             checkSafariDownloadAccess()
         }
+
+            Publishers.CombineLatest($dropZoneTargeting, $dragDetectorTargeting)
+                .map { value1, value2 in
+                    return value1 || value2
+                }
+                .assign(to: \.anyDropZoneTargeting, on: self)
+                .store(in: &cancellables)
         
     }
     

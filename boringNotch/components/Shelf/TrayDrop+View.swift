@@ -11,12 +11,11 @@ struct TrayView: View {
     @EnvironmentObject var vm: BoringViewModel
     @StateObject var tvm = TrayDrop.shared
 
-    @State private var targeting = false
 
 
     var body: some View {
         panel
-            .onDrop(of: [.data], isTargeted: $targeting) { providers in
+            .onDrop(of: [.data], isTargeted: $vm.dropZoneTargeting) { providers in
                 DispatchQueue.global().async { tvm.load(providers) }
                 return true
             }

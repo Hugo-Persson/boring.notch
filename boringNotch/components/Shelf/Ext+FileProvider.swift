@@ -10,8 +10,8 @@ import Foundation
 import UniformTypeIdentifiers
 
 extension NSItemProvider {
-    private func duplicateToOurStorage(_ url: URL?) throws -> URL {
-        guard let url else { throw NSError() }
+    private func duplicateToOurStorage(_ url: URL?) throws -> URL? {
+        guard let url else { return nil }
         let temp = temporaryDirectory
             .appendingPathComponent("TemporaryDrop")
             .appendingPathComponent(UUID().uuidString)
