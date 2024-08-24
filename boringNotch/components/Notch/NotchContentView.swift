@@ -23,7 +23,7 @@ struct NotchContentView: View {
         VStack(alignment: vm.firstLaunch ? .center : .leading, spacing: 0) {
             if vm.notchState == .open {
                 BoringHeader(vm: vm, percentage: batteryModel.batteryPercentage, isCharging: batteryModel.isPluggedIn).animation(.spring(response: 0.7, dampingFraction: 0.8, blendDuration: 0.8), value: vm.notchState).padding(.top, 10)
-            if vm.firstLaunch {
+                if vm.firstLaunch {
                     Spacer()
                     HelloAnimation().frame(width: 180, height: 60).onAppear(perform: {
                         vm.closeHello()
@@ -44,83 +44,81 @@ struct NotchContentView: View {
                             } else {
                                 Image(.chrome).resizable().scaledToFit().frame(width: 30, height: 30)
                             }
-
+                            
                         }
                     }
                     if !vm.expandingView.show {
-                    HStack (spacing: 6){
-                                                ZStack {
-                        Image(nsImage: musicManager.albumArt)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(
-                                width: vm.notchState == .open ? vm.musicPlayerSizes.image.size.opened.width : vm.musicPlayerSizes.image.size.closed.width,
-                                height: vm.notchState == .open ? vm.musicPlayerSizes.image.size.opened.height : vm.musicPlayerSizes.image.size.closed.height
-                            )
-                            .cornerRadius(vm.notchState == .open ? vm.musicPlayerSizes.image.cornerRadius.opened.inset! : vm.musicPlayerSizes.image.cornerRadius.closed.inset!)
-                            .scaledToFit()
-                            .padding(.leading, vm.notchState == .open ? 0 : 3)
-                            if vm.notchState == .open {
-                                                                Image(nsImage: appIcons.getIcon(bundleID: musicManager.bundleIdentifier)!)
-                                                                    .resizable()
-                                                                    .aspectRatio(contentMode: .fill)
-                                                                    .frame(width: vm.notchState == .open ? 30 : 10, height: vm.notchState == .open ? 30 : 10)
-                                                                    .padding(.leading, vm.notchState == .open ? 70 : 20)
-                                                                    .padding(.top, vm.notchState == .open ? 75 : 15)
-                                                                    .transition(.scale.combined(with: .opacity).animation(.bouncy.delay(0.3)))
-                                                            }
-                                                            }
-                    }
-                    if vm.notchState == .open {
-                        switch vm.currentView {
+                        HStack (spacing: 6){
+                            ZStack {
+                                Image(nsImage: musicManager.albumArt)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(
+                                        width: vm.notchState == .open ? vm.musicPlayerSizes.image.size.opened.width : vm.musicPlayerSizes.image.size.closed.width,
+                                        height: vm.notchState == .open ? vm.musicPlayerSizes.image.size.opened.height : vm.musicPlayerSizes.image.size.closed.height
+                                    )
+                                    .cornerRadius(vm.notchState == .open ? vm.musicPlayerSizes.image.cornerRadius.opened.inset! : vm.musicPlayerSizes.image.cornerRadius.closed.inset!)
+                                    .scaledToFit()
+                                    .padding(.leading, vm.notchState == .open ? 0 : 3)
+                                if vm.notchState == .open {
+                                    Image(nsImage: appIcons.getIcon(bundleID: musicManager.bundleIdentifier)!)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: vm.notchState == .open ? 30 : 10, height: vm.notchState == .open ? 30 : 10)
+                                        .padding(.leading, vm.notchState == .open ? 70 : 20)
+                                        .padding(.top, vm.notchState == .open ? 75 : 15)
+                                        .transition(.scale.combined(with: .opacity).animation(.bouncy.delay(0.3)))
+                                }
+                            }
+                            
+                        }
+                        if vm.notchState == .open {
+                            switch vm.currentView {
                             case .home:
                                 NotchHomeView()
-                        case .shelf:
+                                
+                            case .shelf:
                                 NotchShelfView()
-                        default:
-                            Text("ERROR: VIEW NOT DEFINED")
+                                
+                            default:
+                                Text("ERROR: VIEW NOT DEFINED")
+                            }
+                            
+                            
                         }
-                    }
+                        
+                        
 
-
-                    if  vm.notchState != .open {
-                        Spacer()
-                    }
-                    
-                    if musicManager.isPlayerIdle == true && vm.notchState == .closed && !vm.expandingView.show && vm.nothumanface {
-                        MinimalFaceFeatures().transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3))))
-                    }
-                    
-                    
-                    if vm.notchState == .closed && vm.expandingView.show  {
-                        if vm.expandingView.type == .battery {
-                            BoringBatteryView(batteryPercentage: batteryModel.batteryPercentage, isPluggedIn: batteryModel.isPluggedIn, batteryWidth: 30)
-                        } else {
-                            ProgressIndicator(type: .text, progress: 0.01, color: vm.accentColor).padding(.trailing, 4)
+                        
+                        if  vm.notchState != .open {
+                            Spacer()
                         }
-                    }
-                    
-                    if vm.notchState == .closed && !vm.expandingView.show && (musicManager.isPlaying || !musicManager.isPlayerIdle) {
-                        MusicVisualizer(avgColor: musicManager.avgColor, isPlaying: musicManager.isPlaying)
-                            .frame(width: 30)
-                    }
-                    
-                    
-                    if vm.notchState == .open {
-                        BoringSystemTiles(vm: vm, microphoneHandler: microphoneHandler)
-                            .transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3)).delay(0.1)))
-                            .allowsHitTesting(!vm.notchMetastability)
-                        if vm.showMirror {
-                            CircularPreviewView(webcamManager: webcamManager)
-                                .frame(width: 90, height: 90)
+                        
+                        if musicManager.isPlayerIdle == true && vm.notchState == .closed && !vm.expandingView.show && vm.nothumanface {
+                            MinimalFaceFeatures().transition(.blurReplace.animation(.spring(.bouncy(duration: 0.3))))
                         }
+                        
+                        
+                        if vm.notchState == .closed && vm.expandingView.show  {
+                            if vm.expandingView.type == .battery {
+                                BoringBatteryView(batteryPercentage: batteryModel.batteryPercentage, isPluggedIn: batteryModel.isPluggedIn, batteryWidth: 30)
+                            } else {
+                                ProgressIndicator(type: .text, progress: 0.01, color: vm.accentColor).padding(.trailing, 4)
+                            }
+                        }
+                        
+                        if vm.notchState == .closed && !vm.expandingView.show && (musicManager.isPlaying || !musicManager.isPlayerIdle) {
+                            MusicVisualizer(avgColor: musicManager.avgColor, isPlaying: musicManager.isPlaying)
+                                .frame(width: 30)
+                        }
+                        
+                        
                     }
-                }
-                .padding(.bottom, vm.expandingView.show ? 0 : vm.notchState == .closed ? 0 : 15)
-            }
-            
-            if ((vm.notchState == .closed && vm.sneakPeak.show ) && (!vm.expandingView.show)) {
-                switch vm.sneakPeak.type {
+                        
+                }.padding(.bottom, vm.expandingView.show ? 0 : vm.notchState == .closed ? 0 : 15)
+                
+                if ((vm.notchState == .closed && vm.sneakPeak.show ) && (!vm.expandingView.show)) {
+                    switch vm.sneakPeak.type {
                     case .music:
                         HStack(alignment: .center) {
                             Image(systemName: "music.note")
@@ -160,12 +158,13 @@ struct NotchContentView: View {
                             .padding(.trailing, musicManager.isPlaying ? 8 : 4)
                     default:
                         EmptyView()
+                    }
                 }
-            }
-            
+                
                 //            if vm.notchState == .open && !downloadWatcher.downloadFiles.isEmpty {
                 //                DownloadArea().padding(.bottom, 15).transition(.blurReplace.animation(.spring(.bouncy(duration: 0.5)))).environmentObject(downloadWatcher)
                 //            }
+            }
         }
         .frame(width: calculateFrameWidthforNotchContent())
         .transition(.blurReplace.animation(.spring(.bouncy(duration: 0.5))))

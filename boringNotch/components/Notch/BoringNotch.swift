@@ -97,7 +97,6 @@ struct BoringNotch: View {
                             if vm.notchState == .open {
                                 withAnimation(.smooth) {
                                     vm.close()
-                                    vm.openMusic()
                                 }
                             }
                         }
@@ -117,7 +116,6 @@ struct BoringNotch: View {
                             if vm.notchState == .open {
                                 withAnimation(.smooth) {
                                     vm.close()
-                                    vm.openMusic()
                                 }
                             }
                         }
