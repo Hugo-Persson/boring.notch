@@ -29,7 +29,7 @@ enum SneakContentType {
 
 struct SneakPeak {
     var show: Bool = false
-    var type: SneakContentType = .volume
+    var type: SneakContentType = .music
     var value: CGFloat = 0
 }
 
@@ -58,7 +58,7 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var sizes : Sizes = Sizes()
     @Published var musicPlayerSizes: MusicPlayerElementSizes = MusicPlayerElementSizes()
     @Published var waitInterval: Double = 3
-    @Published var releaseName: String = "Sleeping Snail 🐌"
+    @Published var releaseName: String = "Glowing Panda 🐼 (Sleepy)"
     @Published var coloredSpectrogram: Bool = true
     @Published var accentColor: Color = .accentColor
     @Published var selectedDownloadIndicatorStyle: DownloadIndicatorStyle = .progress
@@ -75,9 +75,10 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var minimumHoverDuration: TimeInterval = 0.3
     @Published var notchMetastability: Bool = true // True if notch not open
     @Published var settingsIconInNotch: Bool = true
+    @Published var openNotchOnHover: Bool = false // TODO: Change this
     private var sneakPeakDispatch: DispatchWorkItem?
     private var expandingViewDispatch: DispatchWorkItem?
-    @Published var enableSneakPeek: Bool = false
+    @Published var enableSneakPeek: Bool = true
     @Published var showCHPanel: Bool = false
     @Published var systemEventIndicatorShadow: Bool = true
     @Published var systemEventIndicatorUseAccent: Bool = false
@@ -85,14 +86,19 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var clipboardHistoryPreserveScrollPosition: Bool = false
     @Published var optionKeyPressed: Bool = false
     @Published var spacing: CGFloat = 16
-    
-   
+
+
     @Published var dragDetectorTargeting: Bool = false
     @Published var dropZoneTargeting: Bool = false
-    
+
     @Published var anyDropZoneTargeting: Bool = false
-    
-    
+
+
+    @Published var clipboardHistoryAlwaysShowIcons: Bool = true
+    @Published var clipboardHistoryAutoFocusSearch: Bool = false
+    @Published var clipboardHistoryCloseAfterCopy: Bool = false
+    @Published var showEmojis: Bool = true
+    @Published var clipboardHistoryVisibleTilesCount: CGFloat = 5
     @Published var sneakPeak: SneakPeak = SneakPeak() {
         didSet {
             if sneakPeak.show {
@@ -109,7 +115,7 @@ class BoringViewModel: NSObject, ObservableObject {
         }
     }
     @Published var expandingView: ExpandedItem = ExpandedItem() {
-        didSet{
+        didSet {
             if expandingView.show {
                 expandingViewDispatch?.cancel()
                 
@@ -122,10 +128,11 @@ class BoringViewModel: NSObject, ObservableObject {
             }
         }
     }
+    @Published var hudReplacement: Bool =  true
     @Published var maxClipboardRecords: Int = 1000;
     @Published var clipBoardHistoryDuration: Int = 30
     @Published var showMirror: Bool = true
-    @Published var mirrorShape: MirrorShapeEnum = .circle
+    @Published var mirrorShape: MirrorShapeEnum = .rectangle
     @AppStorage("enableDownloadListener") var enableDownloadListener: Bool = false {
         didSet {
             self.objectWillChange.send()
@@ -133,9 +140,9 @@ class BoringViewModel: NSObject, ObservableObject {
     }
     @AppStorage("enableDownloadListener") var enableSafariDownloads: Bool = false {
         didSet {
-            if enableSafariDownloads {
-                checkSafariDownloadAccess()
-            }
+                //            if enableSafariDownloads {
+                //                checkSafariDownloadAccess()
+                //            }
         }
     }
     
@@ -153,9 +160,9 @@ class BoringViewModel: NSObject, ObservableObject {
         self.animation = self.animationLibrary.animation
         super.init()
         
-        if(self.enableSafariDownloads){
-            checkSafariDownloadAccess()
-        }
+            //        if(self.enableSafariDownloads){
+            //            checkSafariDownloadAccess()
+            //        }
 
             Publishers.CombineLatest($dropZoneTargeting, $dragDetectorTargeting)
                 .map { value1, value2 in
@@ -183,7 +190,7 @@ class BoringViewModel: NSObject, ObservableObject {
         self.notchState = .open
     }
 
-    
+
     func toggleSneakPeak(status:Bool, type: SneakContentType, value: CGFloat = 0 ) {
         if self.sneakPeak.show {
             withAnimation {
@@ -219,7 +226,7 @@ class BoringViewModel: NSObject, ObservableObject {
         self.notchState = .closed
         self.currentView = .home
     }
-    
+
     
     func openClipboard() {
         self.showCHPanel = true;

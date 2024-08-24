@@ -53,7 +53,7 @@ struct SettingsView: View {
     @ViewBuilder
     func GeneralSettings() -> some View {
         Form {
-            warningBadge("Your Settings will not be restored on restart", "By doing this, we can quickly address global bugs. It will be enabled later on.")
+            warningBadge("Your settings will not be restored on restart", "By doing this, we can quickly address global bugs. It will be enabled later on.")
             
             Section {
                 HStack() {
@@ -96,17 +96,21 @@ struct SettingsView: View {
     @ViewBuilder
     func Charge() -> some View {
         Form {
-            Toggle("Show charging indicator", isOn: $vm.chargingInfoAllowed)
-            Toggle("Show battery indicator", isOn: $vm.showBattery.animation())
+            Section {
+                Toggle("Show charging indicator", isOn: $vm.chargingInfoAllowed)
+                Toggle("Show battery indicator", isOn: $vm.showBattery.animation())
+            } header: {
+                Text("General")
+            }
         }
     }
     
     @ViewBuilder
     func Downloads() -> some View {
         Form {
-            warningBadge("We don't support Safari downloads yet", "It will be supported later on.")
+            warningBadge("We don't support downloads yet", "It will be supported later on.")
             Section {
-                Toggle("Show download progress", isOn: $vm.enableDownloadListener)
+                Toggle("Show download progress", isOn: $vm.enableDownloadListener).disabled(true)
                 Toggle("Enable Safari Downloads", isOn: $vm.enableSafariDownloads).disabled(!vm.enableDownloadListener)
                 Picker("Download indicator style", selection: $vm.selectedDownloadIndicatorStyle) {
                     Text("Progress bar")
@@ -172,10 +176,11 @@ struct SettingsView: View {
     @ViewBuilder
     func HUD() -> some View {
         Form {
+            warningBadge("We don't support system hud replacement yet", "It will be supported later on.")
             Section {
-                Toggle("Enable HUD replacement", isOn: .constant(false))
-                Toggle("Enable glowing effect", isOn: $vm.systemEventIndicatorShadow.animation())
-                Toggle("Use accent color", isOn: $vm.systemEventIndicatorUseAccent.animation())
+                Toggle("Enable HUD replacement", isOn: $vm.hudReplacement).disabled(true)
+                Toggle("Enable glowing effect", isOn: $vm.systemEventIndicatorShadow.animation()).disabled(true)
+                Toggle("Use accent color", isOn: $vm.systemEventIndicatorUseAccent.animation()).disabled(true)
             } header: {
                 HStack {
                     Text("Customization")
@@ -186,10 +191,10 @@ struct SettingsView: View {
             Section {
                 KeyboardShortcuts.Recorder("Microphone toggle shortcut", name: .toggleMicrophone)
                 VStack {
-                    KeyboardShortcuts.Recorder("Keyboard backlight up", name: .decreaseBacklight)
-                    KeyboardShortcuts.Recorder("Keyboard backlight down", name: .increaseBacklight)
+                    KeyboardShortcuts.Recorder("Keyboard backlight up", name: .decreaseBacklight).disabled(true)
+                    KeyboardShortcuts.Recorder("Keyboard backlight down", name: .increaseBacklight).disabled(true)
                 }
-            } header :{
+            } header : {
                 Text("Keyboard shortcuts")
             }
         }
@@ -220,10 +225,11 @@ struct SettingsView: View {
     @ViewBuilder
     func boringControls() -> some View {
         Section {
-            
+            Toggle("Show emojis in notch", isOn: $vm.showEmojis)
             Toggle("Show cool face animation while inactivity", isOn: $vm.nothumanface.animation())
             LaunchAtLogin.Toggle("Launch at login 🦄")
             Toggle("Enable haptics", isOn: $vm.enableHaptics)
+            Toggle("Open notch on hover", isOn: $vm.openNotchOnHover)
             Toggle("Enable boring mirror", isOn: $vm.showMirror)
             Picker("Mirror shape", selection: $vm.mirrorShape) {
                 Text("Circle")
@@ -331,7 +337,10 @@ struct SettingsView: View {
             Section {
                 Toggle("Enable shelf", isOn: .constant(false))
             } header: {
-                comingSoonTag()
+                HStack {
+                    Text("General")
+                    comingSoonTag()
+                }
             }
             .disabled(true)
         }
@@ -341,21 +350,35 @@ struct SettingsView: View {
     func Clip() -> some View {
         Form {
             Section {
-                KeyboardShortcuts.Recorder("Clipboard history panel shortcut", name: .clipboardHistoryPanel)
-                
-                Toggle("Hide scrollbar", isOn: $vm.clipboardHistoryHideScrollbar)
-                
                 Toggle("Preserve scroll position", isOn: $vm.clipboardHistoryPreserveScrollPosition)
+                Toggle("Automatically focus the search field", isOn: $vm.clipboardHistoryAutoFocusSearch)
+                Toggle("Close panel after copy", isOn: $vm.clipboardHistoryCloseAfterCopy)
+            } header: {
+                Text("Behavior controls")
+            }
+            
+            Section {
+                Toggle("Hide scrollbar", isOn: $vm.clipboardHistoryHideScrollbar)
+                Toggle("Always show source icon", isOn: $vm.clipboardHistoryAlwaysShowIcons)
+                Slider(value: $vm.clipboardHistoryVisibleTilesCount, in: 4...7, step: 1) {
+                    Text("Visible tiles count - \(vm.clipboardHistoryVisibleTilesCount, specifier: "%.0f")")
+                }
+            } header: {
+                Text("Appearance")
+            }
+            
+            Section {
+                KeyboardShortcuts.Recorder("Clipboard history panel shortcut", name: .clipboardHistoryPanel)
+            } header: {
+                Text("Keyboard shortcut")
+            }
                 
-                Picker("Keep history for", selection: .constant(2)) {
-                    Text("1 day")
-                        .tag(1)
-                    Text("1 week")
-                        .tag(7)
-                    Text("1 month")
-                        .tag(30)
-                    Text("1 year")
-                        .tag(365)
+            Section {
+                Picker("Size limit", selection: .constant("1 GB")) {
+                    ForEach(["100 MB", "500 MB", "1 GB", "2 GB", "5 GB", "10 GB", "Infinite"], id: \.self) { size in
+                        Text(size)
+                            .tag(size)
+                    }
                 }
                 
                 HStack {
@@ -381,13 +404,19 @@ struct SettingsView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
                 
+            } header: {
+                Text("General")
             }
-#if DEBUG
-            .disabled(false)
-#else
-            .disabled(true)
-#endif
         }
+    }
+    
+    func proFeatureBadge () -> some View {
+        Text("Upgrade to Pro")
+            .foregroundStyle(Color(red: 0.545, green: 0.196, blue: 0.98))
+            .font(.footnote.bold())
+            .padding(.vertical, 3)
+            .padding(.horizontal, 6)
+            .background(RoundedRectangle(cornerRadius: 4).stroke(Color(red: 0.545, green: 0.196, blue: 0.98), lineWidth: 1))
     }
     
     func comingSoonTag () -> some View {

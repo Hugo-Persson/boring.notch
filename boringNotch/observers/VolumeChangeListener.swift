@@ -16,8 +16,8 @@ class VolumeChangeListener: ObservableObject {
     
     init(vm: BoringViewModel) {
         self.vm = vm
-        self.gLastVolume = getInitialVolume()
-        startListening()
+//        self.gLastVolume = getInitialVolume()
+//        startListening()
     }
     
     func getInitialVolume() -> Float {
@@ -79,8 +79,6 @@ class VolumeChangeListener: ObservableObject {
     )
     
     func startListening() {
-        print("Starting to listen")
-        
         guard !gVolumeEvents else { return }
         gVolumeEvents = true
         

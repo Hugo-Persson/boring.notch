@@ -85,6 +85,7 @@ class ClipboardManager : ObservableObject {
     ].map({NSPasteboard.PasteboardType($0)})
     
     private var sourceApp: NSRunningApplication? { NSWorkspace.shared.frontmostApplication }
+    private var timer: Timer?
     
     
     init(vm: BoringViewModel) {
@@ -136,17 +137,27 @@ class ClipboardManager : ObservableObject {
     
     
     func startMonitoring() {
-        eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .keyDown]) { [weak self] event in
+        eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.keyDown]) { [weak self] event in
             if event.modifierFlags.contains(.command) && event.charactersIgnoringModifiers == "c" {
                 self?.captureClipboardText()
             }
         }
+        
+            // run a loop which captues pasteboard items in realtime
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+            self?.captureClipboardText()
+        }
+        
     }
     
     deinit {
         if let eventMonitor = eventMonitor {
             NSEvent.removeMonitor(eventMonitor)
         }
+        
+        timer?.invalidate()
+        
     }
     
     func alreadyExists(_ item: Data) -> Bool {
@@ -159,7 +170,7 @@ class ClipboardManager : ObservableObject {
         
         let itemType = item.availableType(from: item.types) ?? .string
         
-        var itemData: Data = item.data(forType: itemType) ?? Data()
+        let itemData: Data = item.data(forType: itemType) ?? Data()
         
         let sourceAppBundle = sourceApp?.bundleIdentifier?.lowercased()
         

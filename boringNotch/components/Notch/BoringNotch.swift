@@ -1,9 +1,9 @@
 //
-    //  BoringNotch.swift
-    //  boringNotch
-    //
-    //  Created by Harsh Vardhan  Goswami  on 04/08/24.
-    //
+//  BoringNotch.swift
+//  boringNotch
+//
+//  Created by Harsh Vardhan  Goswami  on 04/08/24.
+//
 
 import SwiftUI
 
@@ -22,12 +22,15 @@ struct BoringNotch: View {
     @StateObject var downloadWatcher: DownloadWatcher
     @State private var haptics: Bool = false
     @State var dropTargeting: Bool = false
-    
+
     @State private var hoverStartTime: Date?
     @State private var hoverTimer: Timer?
     @State private var hoverAnimation: Bool = false
+    @State private var gestureProgress: CGFloat = .zero
     @ObservedObject var webcamManager: WebcamManager
-    
+    @State var rightPanningEnded: Bool = false
+    @State var leftPanningEnded: Bool = false
+
     init(vm: BoringViewModel, batteryModel: BatteryStatusViewModel, onHover: @escaping () -> Void, clipboardManager: ClipboardManager, microphoneHandler: MicrophoneHandler) {
         _vm = StateObject(wrappedValue: vm)
         _musicManager = StateObject(wrappedValue: MusicManager(vm: vm)!)
@@ -50,14 +53,14 @@ struct BoringNotch: View {
         ? baseWidth + (vm.expandingView.type == .download ? downloadSneakSize.width : batterySenakSize.width)
         : CGFloat(vm.firstLaunch ? 50 : 0) + baseWidth + (isFaceVisible ? 65 : 0)
         
-        return notchWidth + (hoverAnimation ? 16 : 0)
+        return notchWidth + (hoverAnimation ? 16 : 0) + gestureProgress
     }
     
     var body: some View {
         Rectangle()
             .foregroundColor(.black)
             .mask(NotchShape(cornerRadius: vm.notchState == .open ? vm.sizes.cornerRadius.opened.inset : (vm.sneakPeak.show ? 4 : 0) + vm.sizes.cornerRadius.closed.inset!))
-            .frame(width: calculateNotchWidth(), height: vm.notchState == .open ? (vm.sizes.size.opened.height! + (downloadWatcher.downloadFiles.isEmpty ? 0 : 40)) : vm.sizes.size.closed.height! + (hoverAnimation ? 8 : !vm.expandingView.show && vm.sneakPeak.show ? 35 : 0))
+            .frame(width: calculateNotchWidth(), height: vm.notchState == .open ? (vm.sizes.size.opened.height! + (downloadWatcher.downloadFiles.isEmpty ? 0 : 40)) : vm.sizes.size.closed.height! + (hoverAnimation ? 8 + gestureProgress / 3 : !vm.expandingView.show && vm.sneakPeak.show ? 35 : 0))
             .animation(notchAnimation, value: vm.expandingView.show)
             .animation(notchAnimation, value: musicManager.isPlaying)
             .animation(notchAnimation, value: musicManager.lastUpdated)
@@ -67,7 +70,7 @@ struct BoringNotch: View {
             .background(dragDetector)
             .overlay {
                 NotchContentView(clipboardManager: clipboardManager, microphoneHandler: microphoneHandler, webcamManager: webcamManager)
-                    .environmentObject(downloadWatcher)
+//                    .environmentObject(downloadWatcher)
                     .environmentObject(vm)
                     .environmentObject(musicManager)
                     .environmentObject(batteryModel)
@@ -76,29 +79,134 @@ struct BoringNotch: View {
                     .environmentObject(webcamManager)
             }
             .clipped()
-            .onHover { hovering in
-                if hovering {
-                    if ((vm.notchState == .closed) && vm.enableHaptics) {
-                        haptics.toggle()
+            .conditionalModifier(vm.openNotchOnHover) { view in
+                view
+                    .onHover { hovering in
+                        if hovering {
+                            if ((vm.notchState == .closed) && vm.enableHaptics) {
+                                haptics.toggle()
+                            }
+
+                            if(vm.sneakPeak.show){
+                                return;
+                            }
+                            startHoverTimer()
+                        } else {
+                            vm.notchMetastability = true
+                            cancelHoverTimer()
+                            if vm.notchState == .open {
+                                withAnimation(.smooth) {
+                                    vm.close()
+                                    vm.openMusic()
+                                }
+                            }
+                        }
                     }
-                    
-                    if(vm.sneakPeak.show){
-                        return;
+            }
+            .conditionalModifier(!vm.openNotchOnHover) { view in
+                view
+                    .onHover { hovering in
+                        if hovering {
+                            withAnimation(vm.animation) {
+                                hoverAnimation = true
+                            }
+                        } else {
+                            withAnimation(vm.animation) {
+                                hoverAnimation = false
+                            }
+                            if vm.notchState == .open {
+                                withAnimation(.smooth) {
+                                    vm.close()
+                                    vm.openMusic()
+                                }
+                            }
+                        }
                     }
-                    startHoverTimer()
-                } else {
-                    vm.notchMetastability = true
-                    cancelHoverTimer()
-                    if vm.notchState == .open {
+                    .panGesture(direction: .down) { translation, phase in
+                        if !vm.openNotchOnHover {
+                            if vm.notchState == .closed {
+                                withAnimation(.smooth) {
+                                    gestureProgress = (translation / 150) * 20
+                                }
+
+                                if phase == .ended {
+                                    withAnimation(.smooth) {
+                                        gestureProgress = .zero
+                                    }
+                                }
+                            }
+                            if translation > 150 {
+                                withAnimation(vm.animation) {
+                                    if ((vm.notchState == .closed) && vm.enableHaptics) {
+                                        haptics.toggle()
+                                    }
+                                    withAnimation(.smooth) {
+                                        gestureProgress = .zero
+                                    }
+                                    vm.open()
+                                    vm.notchMetastability = false
+                                }
+                            }
+                        }
+                    }
+            }
+            .panGesture(direction: .up) { translation, phase in
+                if (vm.notchState == .open) {
+                    withAnimation(.smooth) {
+                        gestureProgress = (translation / 150) * -20
+                    }
+                    if phase == .ended {
                         withAnimation(.smooth) {
+                            gestureProgress = .zero
+                        }
+                    }
+                    if translation > 150 {
+                        withAnimation(.smooth) {
+                            withAnimation(.smooth) {
+                                gestureProgress = .zero
+                                hoverAnimation = false
+                            }
                             vm.close()
                             //vm.openMusic()
+                            if ((vm.notchState == .closed) && vm.enableHaptics) {
+                                haptics.toggle()
+                            }
                         }
                     }
                 }
             }
+            .panGesture(direction: .right) { translation, phase in
+                if (translation > 150) && !rightPanningEnded && musicManager.isPlaying {
+                    if (vm.notchState == .closed) {
+                        if vm.enableHaptics {
+                            haptics.toggle()
+                        }
+                        musicManager.nextTrack()
+                        rightPanningEnded = true
+                    }
+                }
+
+                if phase == .ended {
+                    rightPanningEnded = false
+                }
+            }
+            .panGesture(direction: .left) { translation, phase in
+                if (translation > 150) && !leftPanningEnded && musicManager.isPlaying {
+                    if (vm.notchState == .closed) {
+                        if vm.enableHaptics {
+                            haptics.toggle()
+                        }
+                        musicManager.previousTrack()
+                        leftPanningEnded = true
+                    }
+                }
+
+                if phase == .ended {
+                    leftPanningEnded = false
+                }
+            }
             .shadow(color: vm.notchState == .open ? .black : hoverAnimation ? .black.opacity(0.5) : .clear, radius: 10)
-            .sensoryFeedback(.levelChange, trigger: haptics)
+            .sensoryFeedback(.alignment, trigger: haptics)
             .environmentObject(vm)
     }
     
@@ -115,14 +223,14 @@ struct BoringNotch: View {
     }
     
     func doOpen(){
-        
+
         withAnimation() {
             vm.open()
             vm.notchMetastability = false
         }
         cancelHoverTimer()
     }
-    
+
     private func checkHoverDuration() {
         guard let startTime = hoverStartTime else { return }
         let hoverDuration = Date().timeIntervalSince(startTime)
@@ -139,7 +247,7 @@ struct BoringNotch: View {
             hoverAnimation = false
         }
     }
-    
+
     @ViewBuilder
     var dragDetector: some View {
         Rectangle()
@@ -155,7 +263,7 @@ struct BoringNotch: View {
                 } else if !isTargeted {
                     // Close the notch when the dragged item leaves the area
                     let mouseLocation: NSPoint = NSEvent.mouseLocation
-                
+
                     let openedHeight = vm.sizes.size.opened.height!
                     let openedWidth = calculateNotchWidth()
                     guard let screen = NSScreen.main else { return }
@@ -179,5 +287,6 @@ struct BoringNotch: View {
 func onHover(){}
 
 #Preview {
-    BoringNotch(vm: BoringViewModel(), batteryModel: BatteryStatusViewModel(vm: .init()), onHover: onHover, clipboardManager: ClipboardManager(vm:.init()), microphoneHandler: MicrophoneHandler(vm:.init())).frame(width: 600, height: 500)
+    BoringNotch(vm: BoringViewModel(), batteryModel: BatteryStatusViewModel(vm: .init()), onHover: onHover, clipboardManager: ClipboardManager(vm:.init()), microphoneHandler: MicrophoneHandler(vm:.init()))
+        .frame(width: 600, height: 500)
 }

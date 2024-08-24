@@ -38,11 +38,6 @@ struct DynamicNotchApp: App {
                 self.appDelegate.vm.openClipboard()
             }
             .keyboardShortcut(KeyboardShortcuts.Name("clipboardHistoryPanel"))
-#if DEBUG
-            .disabled(false)
-#else
-            .disabled(true)
-#endif
             CheckForUpdatesView(updater: updaterController.updater)
             Divider()
             Button("Quit", role: .destructive) {
@@ -70,7 +65,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillTerminate(_ notification: Notification) {
         NotificationCenter.default.removeObserver(self)
-        OSDUIManager.start()
+//        OSDUIManager.start()
     }
     
     func getAccessiblityPermission() {
@@ -91,16 +86,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         getAccessiblityPermission()
         
-        OSDUIManager.stop()
+//                    OSDUIManager.stop()
         
-        DisplayManager.setupListener(vm: vm)
+//                    DisplayManager.setupListener(vm: vm)
         
         clipboardManager = ClipboardManager(vm: vm)
         microphoneHandler = MicrophoneHandler(vm: vm)
         
         clipboardManager?.captureClipboardText()
         
-        keyLightManager = KeyLightManager(vm: vm)
+//         keyLightManager = KeyLightManager(vm: vm)
         
         NotificationCenter.default.addObserver(
             self,
@@ -156,56 +151,57 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     @objc func adjustWindowPosition() {
-        if let screenFrame = window.screen ?? NSScreen.main {
-            let windowWidth = window.frame.width
-            let notchCenterX = screenFrame.frame.width / 2
-            let windowX = notchCenterX - windowWidth / 2
-            let windowY = screenFrame.frame.height
-            
-            window.setFrameTopLeftPoint(NSPoint(x: windowX, y: windowY))
-        }
+            if let screenFrame = window.screen ?? NSScreen.main {
+                let windowWidth = window.frame.width
+                let notchCenterX = screenFrame.frame.width / 2
+                let windowX = notchCenterX - windowWidth / 2
+                let windowY = screenFrame.frame.height
+                
+                window.setFrameTopLeftPoint(NSPoint(x: windowX, y: windowY))
+            }
+
     }
-    
-    func setNotchSize() -> CGSize {
-            // Default notch size, to avoid using optionals
-        var notchHeight: CGFloat = 32
-        var notchWidth: CGFloat = 185
         
-            // Check if the screen is available
-        if let screen = NSScreen.main {
-                // Calculate and set the exact width of the notch
-            if let topLeftNotchpadding: CGFloat = screen.auxiliaryTopLeftArea?.width,
-               let topRightNotchpadding: CGFloat = screen.auxiliaryTopRightArea?.width {
-                notchWidth = screen.frame.width - topLeftNotchpadding - topRightNotchpadding + 10
+        func setNotchSize() -> CGSize {
+                // Default notch size, to avoid using optionals
+            var notchHeight: CGFloat = 32
+            var notchWidth: CGFloat = 185
+            
+                // Check if the screen is available
+            if let screen = NSScreen.main {
+                    // Calculate and set the exact width of the notch
+                if let topLeftNotchpadding: CGFloat = screen.auxiliaryTopLeftArea?.width,
+                   let topRightNotchpadding: CGFloat = screen.auxiliaryTopRightArea?.width {
+                    notchWidth = screen.frame.width - topLeftNotchpadding - topRightNotchpadding + 10
+                }
+                
+                    // Use MenuBar height as notch height if there is no notch
+                notchHeight = screen.frame.maxY - screen.visibleFrame.maxY
+                
+                    // Check if the Mac has a notch
+                if screen.safeAreaInsets.top > 0 {
+                    notchHeight = screen.safeAreaInsets.top
+                }
             }
             
-                // Use MenuBar height as notch height if there is no notch
-            notchHeight = screen.frame.maxY - screen.visibleFrame.maxY
-            
-                // Check if the Mac has a notch
-            if screen.safeAreaInsets.top > 0 {
-                notchHeight = screen.safeAreaInsets.top
+            return .init(width: notchWidth, height: notchHeight)
+        }
+        
+        
+        @objc func togglePopover(_ sender: Any?) {
+            if window.isVisible {
+                window.orderOut(nil)
+            } else {
+                window.orderFrontRegardless()
             }
         }
         
-        return .init(width: notchWidth, height: notchHeight)
-    }
-    
-    
-    @objc func togglePopover(_ sender: Any?) {
-        if window.isVisible {
-            window.orderOut(nil)
-        } else {
-            window.orderFrontRegardless()
+        @objc func showMenu() {
+            statusItem!.menu?.popUp(positioning: nil, at: NSEvent.mouseLocation, in: nil)
         }
+        
+        @objc func quitAction() {
+            NSApplication.shared.terminate(nil)
+        }
+        
     }
-    
-    @objc func showMenu() {
-        statusItem!.menu?.popUp(positioning: nil, at: NSEvent.mouseLocation, in: nil)
-    }
-    
-    @objc func quitAction() {
-        NSApplication.shared.terminate(nil)
-    }
-    
-}

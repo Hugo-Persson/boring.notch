@@ -9,7 +9,7 @@ class FileAccessManager {
     private let bookmarkKey: String
     private let subFolder: String
     
-    init(allowedFileTypes: [String], promptMessage: String, promptTitle: String, bookmarkKey: String,subFolder: String, directoryType: FileManager.SearchPathDirectory, directoryDomainMask: FileManager.SearchPathDomainMask = .userDomainMask) {
+    init(allowedFileTypes: [String], promptMessage: String, promptTitle: String, bookmarkKey: String, subFolder: String, directoryType: FileManager.SearchPathDirectory, directoryDomainMask: FileManager.SearchPathDomainMask = .userDomainMask) {
         self.allowedFileTypes = allowedFileTypes
         self.promptMessage = promptMessage
         self.promptTitle = promptTitle
@@ -31,57 +31,57 @@ class FileAccessManager {
             requestReadAccess()
         }
     }
-
-
-    func getFilePath() -> URL {
+    
+    func getFilePath() -> URL? {
         if let bookmarkData = UserDefaults.standard.data(forKey: bookmarkKey) {
             var isStale = false
-            if let url = try? URL(resolvingBookmarkData: bookmarkData, options: .withSecurityScope, relativeTo: nil, bookmarkDataIsStale: &isStale), !isStale {
-                let _ = url.startAccessingSecurityScopedResource()
-
-                let fileExists = FileManager.default.fileExists(atPath: url.path)
-                if fileExists {
-                    return url
+            do {
+                let url = try URL(resolvingBookmarkData: bookmarkData, options: .withSecurityScope, relativeTo: nil, bookmarkDataIsStale: &isStale)
+                if !isStale {
+                    let _ = url.startAccessingSecurityScopedResource()
+                    let fileExists = FileManager.default.fileExists(atPath: url.path)
+                    if fileExists {
+                        return url
+                    }
+                } else {
+                    print("Bookmark is stale, requesting new access.")
+                    requestReadAccess()
                 }
-                
-            } else {
-                print("Failed to resolve the bookmark or the bookmark is stale.")
+            } catch {
+                print("Failed to resolve the bookmark: \(error)")
             }
         } else {
             print("No bookmark found. Please request access first.")
         }
-        return URL(fileURLWithPath: "")
+        return nil
     }
-
     
         // Check if we already have read access to the specified file or directory
     private func hasReadAccess() -> Bool {
-    // use self.getFilePath
-
-    if let filePath = self.getFilePath() as URL? {
-        if filePath.path.isEmpty || filePath.path == "/" {
+        if let filePath = self.getFilePath() {
+            if filePath.path.isEmpty || filePath.path == "/" {
+                return false
+            }
+            return FileManager.default.fileExists(atPath: filePath.path)
+        } else {
             return false
         }
-        return FileManager.default.fileExists(atPath: filePath.path)
-    } else {
-        return false
-    }
     }
     
         // Request read access to the specified file or directory
     private func requestReadAccess() {
-        let openPanel = NSOpenPanel()
-        openPanel.message = promptMessage
-        openPanel.prompt = promptTitle
-        openPanel.allowedFileTypes = allowedFileTypes
-        openPanel.allowsOtherFileTypes = false
-        openPanel.canChooseFiles = true
-        openPanel.canChooseDirectories = true
-        openPanel.directoryURL = directoryURL
-        
-        openPanel.begin { response in
-            if response == .OK {
-                if let selectedFileURL = openPanel.url {
+        DispatchQueue.main.async { // Ensure this block runs on the main thread
+            let openPanel = NSOpenPanel()
+            openPanel.message = self.promptMessage
+            openPanel.prompt = self.promptTitle
+            openPanel.allowedFileTypes = self.allowedFileTypes
+            openPanel.allowsOtherFileTypes = false
+            openPanel.canChooseFiles = true
+            openPanel.canChooseDirectories = true
+            openPanel.directoryURL = self.directoryURL
+            
+            openPanel.begin { response in
+                if response == .OK, let selectedFileURL = openPanel.url {
                     print("File selected: \(selectedFileURL.path)")
                         // Store security-scoped bookmark for future read access
                     self.storeSecurityScopedBookmark(for: selectedFileURL)
@@ -98,7 +98,6 @@ class FileAccessManager {
             let bookmarkData = try url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil)
                 // Save bookmarkData to UserDefaults or another secure place
             UserDefaults.standard.set(bookmarkData, forKey: bookmarkKey)
-            print(getFilePath())
         } catch {
             print("Failed to create security-scoped bookmark: \(error)")
         }
@@ -108,13 +107,17 @@ class FileAccessManager {
     private func accessFile() {
         if let bookmarkData = UserDefaults.standard.data(forKey: bookmarkKey) {
             var isStale = false
-            if let url = try? URL(resolvingBookmarkData: bookmarkData, options: .withSecurityScope, relativeTo: nil, bookmarkDataIsStale: &isStale), !isStale {
-                _ = url.startAccessingSecurityScopedResource()
-                    // Perform read actions on the file
-                self.readFile(at: url)
-                url.stopAccessingSecurityScopedResource()
-            } else {
-                print("Failed to resolve the bookmark or the bookmark is stale.")
+            do {
+                let url = try URL(resolvingBookmarkData: bookmarkData, options: .withSecurityScope, relativeTo: nil, bookmarkDataIsStale: &isStale)
+                if !isStale {
+                    _ = url.startAccessingSecurityScopedResource()
+                    self.readFile(at: url)
+                } else {
+                    print("Bookmark is stale, requesting new access.")
+                    requestReadAccess()
+                }
+            } catch {
+                print("Failed to resolve the bookmark: \(error)")
             }
         } else {
             print("No bookmark found. Please request access first.")
@@ -123,15 +126,11 @@ class FileAccessManager {
     
         // Example method to read the file
     private func readFile(at url: URL) {
-        do {
-            let fileManager = FileManager.default
-            if fileManager.fileExists(atPath: url.path) {
-                print("File acceess granted")
-            } else {
-                print("File does not exist at path: \(url.path)")
-            }
-        } catch {
-            print("Failed to read file: \(error)")
+        let fileManager = FileManager.default
+        if fileManager.fileExists(atPath: url.path) {
+            print("File access granted")
+        } else {
+            print("File does not exist at path: \(url.path)")
         }
     }
 }

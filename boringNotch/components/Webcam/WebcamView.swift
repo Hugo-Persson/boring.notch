@@ -18,7 +18,7 @@ struct CircularPreviewView: View {
                 if let previewLayer = webcamManager.previewLayer {
                     CameraPreviewLayerView(previewLayer: previewLayer)
                         .scaleEffect(x: -1, y: 1)
-                        .clipShape(RoundedRectangle(cornerRadius: vm.mirrorShape == .rectangle ? 12 : 100))
+                        .clipShape(RoundedRectangle(cornerRadius: vm.mirrorShape == .rectangle ? vm.musicPlayerSizes.image.cornerRadius.opened.inset! : 100))
                         .frame(width: geometry.size.width, height: geometry.size.width)
                         .opacity(webcamManager.isSessionRunning ? 1 : 0)
                 }

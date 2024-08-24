@@ -20,6 +20,9 @@
     "%.1fs" : {
 
     },
+    "%@" : {
+
+    },
     "%d%%" : {
 
     },
@@ -35,25 +38,13 @@
     "• New feature 1" : {
 
     },
+    "⌘ %lld" : {
+
+    },
     "0" : {
 
     },
     "1" : {
-
-    },
-    "1 day" : {
-
-    },
-    "1 month" : {
-
-    },
-    "1 week" : {
-
-    },
-    "1 year" : {
-
-    },
-    "12%" : {
 
     },
     "About" : {
@@ -76,6 +67,12 @@
         }
       }
     },
+    "Always show source icon" : {
+
+    },
+    "Appearance" : {
+
+    },
     "Are you sure you want to clear your clipboard history?" : {
 
     },
@@ -92,6 +89,9 @@
     "Automatically download updates" : {
 
     },
+    "Automatically focus the search field" : {
+
+    },
     "Battery" : {
       "localizations" : {
         "en" : {
@@ -101,6 +101,9 @@
           }
         }
       }
+    },
+    "Behavior controls" : {
+
     },
     "Boring Controls" : {
       "localizations" : {
@@ -188,6 +191,9 @@
 
     },
     "Close" : {
+
+    },
+    "Close panel after copy" : {
 
     },
     "Coming soon" : {
@@ -321,7 +327,7 @@
     "Exit" : {
 
     },
-    "Filename.mp4" : {
+    "Filter" : {
 
     },
     "General" : {
@@ -367,9 +373,6 @@
         }
       }
     },
-    "Keep history for" : {
-
-    },
     "Keep using the app and your copied content will be shown here" : {
 
     },
@@ -377,6 +380,9 @@
 
     },
     "Keyboard backlight up" : {
+
+    },
+    "Keyboard shortcut" : {
 
     },
     "Keyboard shortcuts" : {
@@ -491,6 +497,9 @@
           }
         }
       }
+    },
+    "Open notch on hover" : {
+
     },
     "Percentage" : {
       "localizations" : {
@@ -621,6 +630,12 @@
         }
       }
     },
+    "Show emojis in notch" : {
+
+    },
+    "Size limit" : {
+
+    },
     "Software updates" : {
       "localizations" : {
         "en" : {
@@ -647,6 +662,9 @@
     "This action cannot be undone" : {
 
     },
+    "Upgrade to Pro" : {
+
+    },
     "Use accent color" : {
 
     },
@@ -669,6 +687,9 @@
           }
         }
       }
+    },
+    "Visible tiles count - %.0f" : {
+
     },
     "What's New" : {
 
