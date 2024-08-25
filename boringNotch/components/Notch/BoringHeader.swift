@@ -11,11 +11,18 @@ struct BoringHeader: View {
     @StateObject var vm: BoringViewModel
     @State var percentage:Float
     @State var isCharging: Bool
+    @StateObject var tvm = TrayDrop.shared
     var body: some View {
         HStack(alignment: .center) {
-            Text(vm.headerTitle)
-                .contentTransition(.numericText())
-                .font(.system(size: 12, design: .rounded))
+            if(tvm.isEmpty ){
+                
+                Text(vm.headerTitle)
+                    .contentTransition(.numericText())
+                    .font(.system(size: 12, design: .rounded))
+            }
+            else{
+                TabSelectionView()
+            }
             Spacer()
             HStack(spacing: 4){
                 if(vm.settingsIconInNotch) {

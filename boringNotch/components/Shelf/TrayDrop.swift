@@ -5,8 +5,8 @@ import OrderedCollections
 
 class TrayDrop: ObservableObject {
     static let shared = TrayDrop()
-    
-    var items: OrderedSet<DropItem>
+
+    @Published var items: OrderedSet<DropItem>
     var isEmpty: Bool { items.isEmpty }
     @Published var isLoading: Int = 0
 
@@ -15,27 +15,24 @@ class TrayDrop: ObservableObject {
         self.isLoading = isLoading
     }
 
-
-
     func load(_ providers: [NSItemProvider]) {
         assert(!Thread.isMainThread)
         DispatchQueue.main.asyncAndWait { isLoading += 1 }
+
         guard let urls = providers.interfaceConvert() else {
             DispatchQueue.main.asyncAndWait { isLoading -= 1 }
+            print("FAield to load items")
             return
         }
-        do {
-            let items = try urls.map { try DropItem(url: $0) }
-            DispatchQueue.main.async {
-                items.forEach { self.items.updateOrInsert($0, at: 0) }
-                self.isLoading -= 1
-            }
-        } catch {
-            DispatchQueue.main.async {
-                self.isLoading -= 1
-                NSAlert.popError(error)
-            }
+        let dropItems = urls.map { url in
+            try? DropItem(url: url)
+        }.compactMap { $0 }
+
+        DispatchQueue.main.async {
+            dropItems.forEach { self.items.updateOrInsert($0, at: 0) }
+            self.isLoading -= 1
         }
+        print("DONE")
     }
 
     func cleanExpiredFiles() {
@@ -78,53 +75,3 @@ class TrayDrop: ObservableObject {
     }
 }
 
-extension TrayDrop {
-    enum FileStorageTime: String, CaseIterable, Identifiable, Codable {
-        case oneHour = "1 Hour"
-        case oneDay = "1 Day"
-        case twoDays = "2 Days"
-        case threeDays = "3 Days"
-        case oneWeek = "1 Week"
-        case never = "Forever"
-        case custom = "Custom"
-
-        var id: String { rawValue }
-
-        var localized: String {
-            NSLocalizedString(rawValue, comment: "")
-        }
-
-        func toTimeInterval(customTime: TimeInterval) -> TimeInterval {
-            switch self {
-            case .oneHour:
-                60 * 60
-            case .oneDay:
-                60 * 60 * 24
-            case .twoDays:
-                60 * 60 * 24 * 2
-            case .threeDays:
-                60 * 60 * 24 * 3
-            case .oneWeek:
-                60 * 60 * 24 * 7
-            case .never:
-                TimeInterval.infinity
-            case .custom:
-                customTime
-            }
-        }
-    }
-
-    enum CustomstorageTimeUnit: String, CaseIterable, Identifiable, Codable {
-        case hours = "Hours"
-        case days = "Days"
-        case weeks = "Weeks"
-        case months = "Months"
-        case years = "Years"
-
-        var id: String { rawValue }
-
-        var localized: String {
-            NSLocalizedString(rawValue, comment: "")
-        }
-    }
-}

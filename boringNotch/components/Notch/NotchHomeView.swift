@@ -14,6 +14,9 @@ struct NotchHomeView: View {
     @EnvironmentObject var batteryModel: BatteryStatusViewModel
     @EnvironmentObject var volumeChangeListener: VolumeChangeListener
     @EnvironmentObject var webcamManager: WebcamManager
+   
+    
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             GeometryReader { geo in
@@ -94,3 +97,6 @@ struct NotchHomeView: View {
     
 }
 
+#Preview {
+    BoringNotch(vm: BoringViewModel(), batteryModel: BatteryStatusViewModel(vm: .init()), onHover: onHover, clipboardManager: ClipboardManager(vm: .init()), microphoneHandler: MicrophoneHandler(vm:.init())).frame(width: 800, height: 600)
+}

@@ -52,14 +52,7 @@ extension TrayDrop.DropItem {
         .init(data: workspacePreviewImageData) ?? .init()
     }
 
-    var shouldClean: Bool {
+    var shouldClean: Bool {  // TODO: In the future clean if old
         return false
-        /*
-        if !FileManager.default.fileExists(atPath: storageURL.path) { return true }
-        let keepInterval = TrayDrop.shared.keepInterval
-        guard keepInterval > 0 else { return true } // avoid non-reasonable value deleting user's files
-        if Date().timeIntervalSince(copiedDate) > TrayDrop.shared.keepInterval { return true }
-        return false
-         */
     }
 }

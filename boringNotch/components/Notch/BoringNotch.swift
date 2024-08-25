@@ -21,8 +21,8 @@ struct BoringNotch: View {
     @StateObject var microphoneHandler: MicrophoneHandler
     @StateObject var downloadWatcher: DownloadWatcher
     @State private var haptics: Bool = false
-    @State var dropTargeting: Bool = false
 
+    @State private var isHovering = false
     @State private var hoverStartTime: Date?
     @State private var hoverTimer: Timer?
     @State private var hoverAnimation: Bool = false
@@ -259,6 +259,14 @@ struct BoringNotch: View {
                     vm.currentView = .shelf
                     doOpen()
                 } else if !isTargeted {
+                    print("DROP EVENT", vm.dropEvent)
+                    if(vm.dropEvent){
+                        vm.dropEvent = false
+                        return
+                    }
+                   
+                    vm.dropEvent = false
+
                     // Close the notch when the dragged item leaves the area
                     let mouseLocation: NSPoint = NSEvent.mouseLocation
 
@@ -272,7 +280,7 @@ struct BoringNotch: View {
                         width: openedWidth,
                         height: openedHeight
                     )
-                    print("Closing notch")
+                    print("Closing notch from drag detector")
                     withAnimation(.smooth) {
                         vm.close()
                     }

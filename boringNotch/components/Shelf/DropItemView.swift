@@ -26,34 +26,22 @@ struct DropItemView: View {
             Text(item.fileName)
                 .multilineTextAlignment(.center)
                 .font(.system(.footnote, design: .rounded))
+                .foregroundStyle(.white)
                 .frame(maxWidth: 64)
         }
-        .contentShape(Rectangle())
-        .transition(.asymmetric(
-            insertion: .opacity.combined(with: .scale),
-            removal: .movingParts.poof
-        ))
         .contentShape(Rectangle())
         .onHover { hover = $0 }
         .scaleEffect(hover ? 1.05 : 1.0)
         .animation(vm.animation, value: hover)
         .onDrag { NSItemProvider(contentsOf: item.storageURL) ?? .init() }
-        .onTapGesture {
-            return;
-            //guard !vm.optionKeyPressed else { return }
-            //vm.notchClose()
-            //DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                //NSWorkspace.shared.open(item.storageURL)
-            //}
-        }
         .overlay {
             Image(systemName: "xmark.circle.fill")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .foregroundStyle(.red)
                 .background(Color.white.clipShape(Circle()).padding(1))
-                frame(width: vm.spacing, height: vm.spacing)
-                .opacity(vm.optionKeyPressed ? 1 : 0)
+                .frame(width: vm.spacing, height: vm.spacing)
+                .opacity(vm.optionKeyPressed ? 1 : 0) // TODO: Use option key pressed to show delete
                 .scaleEffect(vm.optionKeyPressed ? 1 : 0.5)
                 .animation(vm.animation, value: vm.optionKeyPressed)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)

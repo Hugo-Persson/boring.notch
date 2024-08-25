@@ -51,7 +51,7 @@ class BoringViewModel: NSObject, ObservableObject {
     let animationLibrary: BoringAnimations = BoringAnimations()
     let animation: Animation?
     @Published var contentType: ContentType = .normal
-    @Published var notchState: NotchState = .closed
+    @Published private(set) var notchState: NotchState = .closed
     @Published var currentView: NotchViews = .home
     @Published var headerTitle: String = "Boring Notch"
     @Published var emptyStateText: String = "Play some jams, ladies, and watch me shine! New features coming soon! 🎶 🚀"
@@ -75,7 +75,7 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var minimumHoverDuration: TimeInterval = 0.3
     @Published var notchMetastability: Bool = true // True if notch not open
     @Published var settingsIconInNotch: Bool = true
-    @Published var openNotchOnHover: Bool = false // TODO: Change this
+    @Published var openNotchOnHover: Bool = true // TODO: Change this
     private var sneakPeakDispatch: DispatchWorkItem?
     private var expandingViewDispatch: DispatchWorkItem?
     @Published var enableSneakPeek: Bool = true
@@ -84,12 +84,13 @@ class BoringViewModel: NSObject, ObservableObject {
     @Published var systemEventIndicatorUseAccent: Bool = false
     @Published var clipboardHistoryHideScrollbar: Bool = true
     @Published var clipboardHistoryPreserveScrollPosition: Bool = false
-    @Published var optionKeyPressed: Bool = false
+    @Published var optionKeyPressed: Bool = true
     @Published var spacing: CGFloat = 16
 
 
     @Published var dragDetectorTargeting: Bool = false
     @Published var dropZoneTargeting: Bool = false
+    @Published var dropEvent: Bool = false
 
     @Published var anyDropZoneTargeting: Bool = false
 
@@ -187,6 +188,7 @@ class BoringViewModel: NSObject, ObservableObject {
     }
     
     func open(){
+
         self.notchState = .open
     }
 
@@ -224,7 +226,13 @@ class BoringViewModel: NSObject, ObservableObject {
     
     func close(){
         self.notchState = .closed
-        self.currentView = .home
+        
+        if(TrayDrop.shared.isEmpty){
+            currentView = .home
+        }
+        else{
+            currentView = .shelf
+        }
     }
 
     
